@@ -67,10 +67,15 @@ public class LoginActivity extends AppCompatActivity {
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
 
-        // TODO: Implement your own authentication logic here.
-        onLoginSuccess();
+        AccountService x = new AccountService();
+        if(x.login(email, password)){
+            onLoginSuccess();
+        }
+        else{
+            onLoginFailed();
+        }
 
-        new android.os.Handler().postDelayed(
+        /*new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
                         // On complete call either onLoginSuccess or onLoginFailed
@@ -78,11 +83,11 @@ public class LoginActivity extends AppCompatActivity {
                         // onLoginFailed();
                         progressDialog.dismiss();
                     }
-                }, 3000);
+                }, 3000);*/
     }
 
 
-    @Override
+    /*@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_SIGNUP) {
             if (resultCode == RESULT_OK) {
@@ -92,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
                 this.finish();
             }
         }
-    }
+    }*/
 
     @Override
     public void onBackPressed() {
@@ -108,8 +113,9 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onLoginFailed() {
         Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
-
         _loginButton.setEnabled(true);
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 
     public boolean validate() {
