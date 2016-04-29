@@ -67,13 +67,9 @@ public class LoginActivity extends AppCompatActivity {
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
 
-        AccountService x = new AccountService();
-        if(x.login(email, password)){
-            onLoginSuccess();
-        }
-        else{
-            onLoginFailed();
-        }
+
+        onLoginSuccess();
+
 
         /*new android.os.Handler().postDelayed(
                 new Runnable() {
