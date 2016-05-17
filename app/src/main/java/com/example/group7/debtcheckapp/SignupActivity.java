@@ -13,6 +13,10 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
+import com.example.group7.debtcheckapp.Mock.Account;
+import com.example.group7.debtcheckapp.Mock.AccountList;
+
+
 public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
 
@@ -64,7 +68,8 @@ public class SignupActivity extends AppCompatActivity {
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
 
-        //TO DO: hier Logik für SignUP implementieren
+        Account x = new Account(name, password);
+        AccountList.setAccList(x);
 
         new android.os.Handler().postDelayed(
                 new Runnable() {

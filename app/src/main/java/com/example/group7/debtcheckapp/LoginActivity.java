@@ -11,6 +11,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.group7.debtcheckapp.Mock.Account;
+import com.example.group7.debtcheckapp.Mock.AccountList;
+
+import java.util.ArrayList;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -67,11 +72,27 @@ public class LoginActivity extends AppCompatActivity {
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
 
+        ArrayList<Account> x = AccountList.getAccList();
 
-        onLoginSuccess();
+        for(int i = 0; i<x.size(); i++){
+            Account y = x.get(i);
+            if(email == y.getUserName()) {
+                if (password == y.getPassword()) {
+                    onLoginSuccess();
+                }
+                else{
+                    onLoginFailed();
+                }
+            }
+            else{
+                onLoginFailed();
+            }
+        }
 
 
-        /*new android.os.Handler().postDelayed(
+
+
+        new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
                         // On complete call either onLoginSuccess or onLoginFailed
@@ -79,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
                         // onLoginFailed();
                         progressDialog.dismiss();
                     }
-                }, 3000);*/
+                }, 3000);
     }
 
 

@@ -35,6 +35,12 @@
         <activity
             android:name=".SettingsActivity"
             android:label="Settings" />
+        <activity
+            android:name=".FriendsListActivity"
+            android:label="Friend List"/>
+        <activity
+            android:name=".FriendsActivity"
+            android:label="Friend"/>
     </application>
 
 </manifest>
