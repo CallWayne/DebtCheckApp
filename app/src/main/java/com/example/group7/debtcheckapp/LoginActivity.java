@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
 
-        ArrayList<Account> x = AccountList.getAccList();
+        /*ArrayList<Account> x = AccountList.getAccList();
 
         for(int i = 0; i<x.size(); i++){
             Account y = x.get(i);
@@ -87,7 +87,9 @@ public class LoginActivity extends AppCompatActivity {
             else{
                 onLoginFailed();
             }
-        }
+        }*/
+
+        onLoginSuccess();
 
 
 

@@ -12,4 +12,12 @@
     tools:context="com.example.group7.debtcheckapp.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Debt"
+        android:id="@+id/newDebt"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="62dp" />
 </RelativeLayout>

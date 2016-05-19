@@ -37,10 +37,13 @@
             android:label="Settings" />
         <activity
             android:name=".FriendsListActivity"
-            android:label="Friend List"/>
+            android:label="Friend List" />
         <activity
             android:name=".FriendsActivity"
-            android:label="Friend"/>
+            android:label="Friend" />
+        <activity 
+            android:name=".DebtActivity"
+            android:label="Debt"/>
     </application>
 
 </manifest>
