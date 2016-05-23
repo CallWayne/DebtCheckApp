@@ -41,9 +41,11 @@
         <activity
             android:name=".FriendsActivity"
             android:label="Friend" />
-        <activity 
+        <activity
             android:name=".DebtActivity"
-            android:label="Debt"/>
+            android:label="Debt" />
+        <activity android:name=".FriendsSearchActivity" />
+        <activity android:name=".ProfileActivity"></activity>
     </application>
 
 </manifest>

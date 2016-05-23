@@ -68,8 +68,16 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
         }
+        else if (id == R.id.nav_profile) {
+            Intent intent = new Intent(this, ProfileActivity.class);
+            startActivity(intent);
+        }
         else if (id == R.id.nav_friends) {
             Intent intent = new Intent(this, FriendsListActivity.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.nav_addfriends) {
+            Intent intent = new Intent(this, FriendsSearchActivity.class);
             startActivity(intent);
         }
 

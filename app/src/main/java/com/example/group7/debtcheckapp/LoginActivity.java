@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                // Start the Signup activity
+                //Start the Signup activity
                 Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
                 startActivityForResult(intent, REQUEST_SIGNUP);
             }
@@ -72,29 +72,9 @@ public class LoginActivity extends AppCompatActivity {
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
 
-        /*ArrayList<Account> x = AccountList.getAccList();
-
-        for(int i = 0; i<x.size(); i++){
-            Account y = x.get(i);
-            if(email == y.getUserName()) {
-                if (password == y.getPassword()) {
-                    onLoginSuccess();
-                }
-                else{
-                    onLoginFailed();
-                }
-            }
-            else{
-                onLoginFailed();
-            }
-        }*/
-
         onLoginSuccess();
 
-
-
-
-        new android.os.Handler().postDelayed(
+        /*new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
                         // On complete call either onLoginSuccess or onLoginFailed
@@ -102,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                         // onLoginFailed();
                         progressDialog.dismiss();
                     }
-                }, 3000);
+                }, 3000);*/
     }
 
 
@@ -111,8 +91,8 @@ public class LoginActivity extends AppCompatActivity {
         if (requestCode == REQUEST_SIGNUP) {
             if (resultCode == RESULT_OK) {
 
-                // TODO: Implement successful signup logic here
-                // By default we just finish the Activity and log them in automatically
+
+
                 this.finish();
             }
         }
@@ -124,19 +104,20 @@ public class LoginActivity extends AppCompatActivity {
         moveTaskToBack(true);
     }
 
-    public void onLoginSuccess() {
+    private void onLoginSuccess() {
         _loginButton.setEnabled(true);
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
-    public void onLoginFailed() {
+    private void onLoginFailed() {
         Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
         _loginButton.setEnabled(true);
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
     }
 
+    /*
+    Validierung der Eingabewerte im Login Bereich
+     */
     public boolean validate() {
         boolean valid = true;
 

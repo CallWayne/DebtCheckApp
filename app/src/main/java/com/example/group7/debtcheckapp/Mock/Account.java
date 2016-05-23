@@ -18,16 +18,20 @@ public class Account implements Serializable {
 
     private int id;
     private String userName;
+    private String email;
     private String password;
     private HashMap<Integer,Debt> debts;
     private HashMap<Integer,Claim> claims;
+    private ArrayList<Account> friendlist;
 
-    public Account (String userName, String password){
+    public Account (String userName, String email, String password){
         this.id = lastID++;
         this.userName = userName;
+        this.email = email;
         this.password = password;
         this.debts = new HashMap<>();
         this.claims = new HashMap<>();
+        this.friendlist = new ArrayList<>();
     }
 
     public void addNewDebt(Debt newDebt) {
@@ -44,6 +48,10 @@ public class Account implements Serializable {
 
     public String getPassword() {
         return this.password;
+    }
+
+    public String getEmail(){
+        return this.email;
     }
 
     public Debt getDebtById(int debtId) {
@@ -68,6 +76,23 @@ public class Account implements Serializable {
 
     public void setId(int accountId) {
         this.id = accountId;
+    }
+
+    public void addFriendlist(Account newAccount){
+        friendlist.add(newAccount);
+    }
+
+    public ArrayList<Account> getFriendlist(){
+        return this.friendlist;
+    }
+
+    public String getFriendname(){
+        for(int i = 0; i<friendlist.size();i++){
+            Account x = friendlist.get(i);
+            String y = x.getUserName();
+            return y;
+        }
+        return null;
     }
 
     public String toString() {

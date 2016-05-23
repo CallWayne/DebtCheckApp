@@ -68,7 +68,7 @@ public class SignupActivity extends AppCompatActivity {
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
 
-        Account x = new Account(name, password);
+        Account x = new Account(name, email, password);
         AccountList.setAccList(x);
 
         new android.os.Handler().postDelayed(
@@ -94,8 +94,6 @@ public class SignupActivity extends AppCompatActivity {
     public void onSignupFailed() {
         Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
         _signupButton.setEnabled(true);
-        Intent intent = new Intent(this, SignupActivity.class);
-        startActivity(intent);
     }
 
     public boolean validate() {

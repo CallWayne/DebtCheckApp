@@ -7,12 +7,20 @@
             android:title="Settings" />
 
     
-    <item android:title="Communicate">
+    <item android:title="Your Profil">
         <menu>
+            <item
+                android:id="@+id/nav_profile"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Your Profile" />
             <item
                 android:id="@+id/nav_friends"
                 android:icon="@drawable/ic_menu_share"
                 android:title="Friends" />
+            <item
+                android:id="@+id/nav_addfriends"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Add a Friend" />
         </menu>
     </item>
 
