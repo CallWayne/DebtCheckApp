@@ -72,7 +72,21 @@ public class LoginActivity extends AppCompatActivity {
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
 
-        onLoginSuccess();
+        ArrayList<Account> x = AccountList.getAccList();
+
+           
+            for (int i = 0; i < x.size(); i++) {
+                Account y = x.get(i);
+
+                if (email.equals(y.getEmail()) && password.equals(y.getPassword())) {
+                    onLoginSuccess();
+                } else {
+                    onLoginFailed();
+                }
+
+            }
+
+
 
         /*new android.os.Handler().postDelayed(
                 new Runnable() {
@@ -90,8 +104,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_SIGNUP) {
             if (resultCode == RESULT_OK) {
-
-
 
                 this.finish();
             }
