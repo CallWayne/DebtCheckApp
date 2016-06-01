@@ -1,4 +1,4 @@
-package wsdl.example.group7.Wsdl2Code.WebServices.OnlineIntegrationService;
+package com.example.group7.Wsdl2Code.OnlineIntegrationService;
 
 //------------------------------------------------------------------------------
 // <wsdl2code-generated>
@@ -17,46 +17,46 @@ import org.ksoap2.serialization.PropertyInfo;
 import java.util.Hashtable;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
+import java.util.Vector;
+import com.example.group7.Wsdl2Code.OnlineIntegrationService.debtTO;
 
-public class debt implements KvmSerializable {
+public class VectordebtTO extends Vector<debtTO> implements KvmSerializable {
     
     
-    public debt(){}
+    public VectordebtTO(){}
     
-    public debt(SoapObject soapObject)
+    public VectordebtTO(SoapObject soapObject)
     {
         if (soapObject == null)
             return;
+        if (soapObject != null){
+            int size = soapObject.getPropertyCount();
+            for (int i0=0;i0<size;i0++){
+                Object obj = soapObject.getProperty(i0);
+                if (obj!=null && obj.getClass().equals(SoapObject.class)){
+                    SoapObject j0 =(SoapObject) soapObject.getProperty(i0);
+                    debtTO j1= new debtTO(j0);
+                    add(j1);
+                }
+            }
+        }
     }
     @Override
     public Object getProperty(int arg0) {
-        switch(arg0){
-        }
-        return null;
+        return this.get(arg0);
     }
     
     @Override
     public int getPropertyCount() {
-        return 0;
+        return this.size();
     }
     
     @Override
     public void getPropertyInfo(int index, @SuppressWarnings("rawtypes") Hashtable arg1, PropertyInfo info) {
-        switch(index){
-        }
+        info.name = "debtTO";
+        info.type = debtTO.class;
     }
-    
-    @Override
-    public String getInnerText() {
-        return null;
-    }
-    
-    
-    @Override
-    public void setInnerText(String s) {
-    }
-    
-    
+
     @Override
     public void setProperty(int arg0, Object arg1) {
     }

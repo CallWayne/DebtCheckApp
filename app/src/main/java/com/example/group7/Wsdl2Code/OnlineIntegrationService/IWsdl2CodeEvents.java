@@ -1,4 +1,4 @@
-package wsdl.example.group7.Wsdl2Code.WebServices.OnlineIntegrationService;
+package com.example.group7.Wsdl2Code.OnlineIntegrationService;
 
 //------------------------------------------------------------------------------
 // <wsdl2code-generated>

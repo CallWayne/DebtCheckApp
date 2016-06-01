@@ -1,4 +1,4 @@
-package wsdl.example.group7.Wsdl2Code.WebServices.OnlineIntegrationService;
+package com.example.group7.Wsdl2Code.OnlineIntegrationService;
 
 //------------------------------------------------------------------------------
 // <wsdl2code-generated>
@@ -18,12 +18,12 @@ import java.util.Hashtable;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
 
-public class dataTransferObject implements KvmSerializable {
+public class debt implements KvmSerializable {
     
     
-    public dataTransferObject(){}
+    public debt(){}
     
-    public dataTransferObject(SoapObject soapObject)
+    public debt(SoapObject soapObject)
     {
         if (soapObject == null)
             return;
@@ -45,17 +45,6 @@ public class dataTransferObject implements KvmSerializable {
         switch(index){
         }
     }
-    
-    @Override
-    public String getInnerText() {
-        return null;
-    }
-    
-    
-    @Override
-    public void setInnerText(String s) {
-    }
-    
     
     @Override
     public void setProperty(int arg0, Object arg1) {

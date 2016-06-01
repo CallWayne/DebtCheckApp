@@ -1,4 +1,4 @@
-package wsdl.example.group7.Wsdl2Code.WebServices.OnlineIntegrationService;
+package com.example.group7.Wsdl2Code.OnlineIntegrationService;
 
 //------------------------------------------------------------------------------
 // <wsdl2code-generated>
@@ -113,18 +113,7 @@ public class debtTO implements KvmSerializable {
                 break;
         }
     }
-    
-    @Override
-    public String getInnerText() {
-        return null;
-    }
-    
-    
-    @Override
-    public void setInnerText(String s) {
-    }
-    
-    
+
     @Override
     public void setProperty(int arg0, Object arg1) {
     }

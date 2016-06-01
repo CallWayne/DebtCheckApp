@@ -1,4 +1,4 @@
-package wsdl.example.group7.Wsdl2Code.WebServices.OnlineIntegrationService;
+package com.example.group7.Wsdl2Code.OnlineIntegrationService;
 
 //------------------------------------------------------------------------------
 // <wsdl2code-generated>
@@ -18,39 +18,17 @@ import java.util.Hashtable;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
 
-public class payDebtResponsee implements KvmSerializable {
+public class returnCodeResponse implements KvmSerializable {
     
-    public double newAmount;
-    public boolean newAmountSpecified;
     public String message;
     public int returnCodeField;
     
-    public payDebtResponsee(){}
+    public returnCodeResponse(){}
     
-    public payDebtResponsee(SoapObject soapObject)
+    public returnCodeResponse(SoapObject soapObject)
     {
         if (soapObject == null)
             return;
-        if (soapObject.hasProperty("newAmount"))
-        {
-            Object obj = soapObject.getProperty("newAmount");
-            if (obj != null && obj.getClass().equals(SoapPrimitive.class)){
-                SoapPrimitive j =(SoapPrimitive) obj;
-                newAmount = Double.parseDouble(j.toString());
-            }else if (obj!= null && obj instanceof Number){
-                newAmount = (Double) obj;
-            }
-        }
-        if (soapObject.hasProperty("newAmountSpecified"))
-        {
-            Object obj = soapObject.getProperty("newAmountSpecified");
-            if (obj != null && obj.getClass().equals(SoapPrimitive.class)){
-                SoapPrimitive j =(SoapPrimitive) obj;
-                newAmountSpecified = Boolean.parseBoolean(j.toString());
-            }else if (obj!= null && obj instanceof Boolean){
-                newAmountSpecified = (Boolean) obj;
-            }
-        }
         if (soapObject.hasProperty("message"))
         {
             Object obj = soapObject.getProperty("message");
@@ -76,12 +54,8 @@ public class payDebtResponsee implements KvmSerializable {
     public Object getProperty(int arg0) {
         switch(arg0){
             case 0:
-                return newAmount;
-            case 1:
-                return newAmountSpecified;
-            case 2:
                 return message;
-            case 3:
+            case 1:
                 return returnCodeField;
         }
         return null;
@@ -89,42 +63,23 @@ public class payDebtResponsee implements KvmSerializable {
     
     @Override
     public int getPropertyCount() {
-        return 4;
+        return 2;
     }
     
     @Override
     public void getPropertyInfo(int index, @SuppressWarnings("rawtypes") Hashtable arg1, PropertyInfo info) {
         switch(index){
             case 0:
-                info.type = Double.class;
-                info.name = "newAmount";
-                break;
-            case 1:
-                info.type = PropertyInfo.BOOLEAN_CLASS;
-                info.name = "newAmountSpecified";
-                break;
-            case 2:
                 info.type = PropertyInfo.STRING_CLASS;
                 info.name = "message";
                 break;
-            case 3:
+            case 1:
                 info.type = PropertyInfo.INTEGER_CLASS;
                 info.name = "returnCode";
                 break;
         }
     }
-    
-    @Override
-    public String getInnerText() {
-        return null;
-    }
-    
-    
-    @Override
-    public void setInnerText(String s) {
-    }
-    
-    
+
     @Override
     public void setProperty(int arg0, Object arg1) {
     }

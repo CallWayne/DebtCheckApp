@@ -1,4 +1,4 @@
-package wsdl.example.group7.Wsdl2Code.WebServices.OnlineIntegrationService;
+package com.example.group7.Wsdl2Code.OnlineIntegrationService;
 
 //------------------------------------------------------------------------------
 // <wsdl2code-generated>
@@ -18,14 +18,14 @@ import java.util.Hashtable;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
 import java.util.Vector;
-import wsdl.example.group7.Wsdl2Code.WebServices.OnlineIntegrationService.accountTOEntry;
+import com.example.group7.Wsdl2Code.OnlineIntegrationService.accountTOEntry1;
 
-public class VectoraccountTOEntry extends Vector<accountTOEntry> implements KvmSerializable {
+public class VectoraccountTOEntry1 extends Vector<accountTOEntry1> implements KvmSerializable {
     
     
-    public VectoraccountTOEntry(){}
+    public VectoraccountTOEntry1(){}
     
-    public VectoraccountTOEntry(SoapObject soapObject)
+    public VectoraccountTOEntry1(SoapObject soapObject)
     {
         if (soapObject == null)
             return;
@@ -35,7 +35,7 @@ public class VectoraccountTOEntry extends Vector<accountTOEntry> implements KvmS
                 Object obj = soapObject.getProperty(i0);
                 if (obj!=null && obj.getClass().equals(SoapObject.class)){
                     SoapObject j0 =(SoapObject) soapObject.getProperty(i0);
-                    accountTOEntry j1= new accountTOEntry(j0);
+                    accountTOEntry1 j1= new accountTOEntry1(j0);
                     add(j1);
                 }
             }
@@ -53,21 +53,10 @@ public class VectoraccountTOEntry extends Vector<accountTOEntry> implements KvmS
     
     @Override
     public void getPropertyInfo(int index, @SuppressWarnings("rawtypes") Hashtable arg1, PropertyInfo info) {
-        info.name = "accountTOEntry";
-        info.type = accountTOEntry.class;
+        info.name = "accountTOEntry1";
+        info.type = accountTOEntry1.class;
     }
-    
-    @Override
-    public String getInnerText() {
-        return null;
-    }
-    
-    
-    @Override
-    public void setInnerText(String s) {
-    }
-    
-    
+
     @Override
     public void setProperty(int arg0, Object arg1) {
     }
