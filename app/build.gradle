@@ -25,4 +25,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.2.1'
     compile 'com.android.support:design:23.2.1'
     compile 'com.jakewharton:butterknife:6.1.0'
+
+    compile 'com.google.code.ksoap2-android:ksoap2-android:3.6.0'
 }
