@@ -37,13 +37,13 @@ public class accountTO implements KvmSerializable {
             return;
         if (soapObject.hasProperty("claims"))
         {
-            SoapObject j = (SoapObject)soapObject.getProperty("claims");
-            claims = new VectoraccountTOEntry(j);
+            //SoapObject j = (SoapObject)soapObject.getProperty("claims");
+            claims = new VectoraccountTOEntry(soapObject);
         }
         if (soapObject.hasProperty("debts"))
         {
-            SoapObject j = (SoapObject)soapObject.getProperty("debts");
-            debts = new VectoraccountTOEntry1(j);
+            //SoapObject j = (SoapObject)soapObject.getProperty("debts");
+            debts = new VectoraccountTOEntry1(soapObject);
         }
         if (soapObject.hasProperty("id"))
         {

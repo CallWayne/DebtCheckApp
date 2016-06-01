@@ -34,8 +34,8 @@ public class userLoginResponse implements KvmSerializable {
             return;
         if (soapObject.hasProperty("account"))
         {
-            SoapObject j = (SoapObject)soapObject.getProperty("account");
-            account =  new accountTO (j);
+            //SoapObject j = (SoapObject)soapObject.getProperty("account");
+            account =  new accountTO (soapObject);
             
         }
         if (soapObject.hasProperty("sessionId"))

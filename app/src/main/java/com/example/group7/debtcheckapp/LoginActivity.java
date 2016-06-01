@@ -1,7 +1,9 @@
 package com.example.group7.debtcheckapp;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.IntegerRes;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.content.Intent;
@@ -10,10 +12,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.os.AsyncTask;
 
+import com.example.group7.debtcheckapp.Exceptions.InvalidLoginException;
 import com.example.group7.debtcheckapp.Mock.Account;
 import com.example.group7.debtcheckapp.Mock.AccountList;
-
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
@@ -38,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                login();
+                login(v);
             }
         });
 
@@ -53,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void login() {
+    public void login(View btnLogin ) {
         Log.d(TAG, "Login");
 
         if (!validate()) {
@@ -72,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
 
-        ArrayList<Account> x = AccountList.getAccList();
+        /*ArrayList<Account> x = AccountList.getAccList();
 
            
             for (int i = 0; i < x.size(); i++) {
@@ -84,8 +87,10 @@ public class LoginActivity extends AppCompatActivity {
                     onLoginFailed();
                 }
 
-            }
+            }*/
 
+        LoginTask loginTask = new LoginTask(btnLogin.getContext());
+        loginTask.execute(email, password);
 
 
         /*new android.os.Handler().postDelayed(
@@ -116,14 +121,15 @@ public class LoginActivity extends AppCompatActivity {
         moveTaskToBack(true);
     }
 
-    private void onLoginSuccess() {
+    /*private void onLoginSuccess() {
         _loginButton.setEnabled(true);
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-    }
+    }*/
 
     private void onLoginFailed() {
-        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+        CharSequence text = "Login fehlgeschlagen!";
+        Toast.makeText(getBaseContext(), text, Toast.LENGTH_LONG).show();
         _loginButton.setEnabled(true);
     }
 
@@ -151,5 +157,60 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         return valid;
+    }
+
+    private class LoginTask extends AsyncTask<String, Integer, Account> {
+
+        private Context context;
+
+        public LoginTask(Context context)
+        {
+            this.context = context;
+        }
+
+        @Override
+        protected Account doInBackground(String... params) {
+            if(params.length != 2) {
+                return null;
+            }
+
+            String email = params[0];
+            String password = params[1];
+            DebtCheckAndroidApplication app = (DebtCheckAndroidApplication) getApplication();
+
+            try {
+                Account userAccount = app.getOnlineIntegrationServiceInterface().login(email, password);
+                return userAccount;
+            }
+            catch (InvalidLoginException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        protected void onPostExecute(Account result)
+        {
+            if(result != null)
+            {
+                //erfolgreich eingeloggt
+                DebtCheckAndroidApplication app = (DebtCheckAndroidApplication) getApplication();
+                app.setAccount(result);
+
+                //Toast anzeigen
+                CharSequence text = "Login erfolgreich! Angemeldeter Benutzername: " + result.getUserName();
+                Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+
+                //Nächste Activity anzeigen
+                _loginButton.setEnabled(true);
+                Intent intent = new Intent(context, MainActivity.class);
+                startActivity(intent);
+            }
+            else
+            {
+                //Toast anzeigen
+                CharSequence text = "Login fehlgeschlagen!";
+                Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }
