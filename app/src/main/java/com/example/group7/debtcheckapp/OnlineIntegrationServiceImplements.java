@@ -4,6 +4,7 @@ import com.example.group7.Wsdl2Code.OnlineIntegrationService.OnlineIntegrationSe
 import com.example.group7.Wsdl2Code.OnlineIntegrationService.userLoginResponse;
 import com.example.group7.Wsdl2Code.OnlineIntegrationService.returnCodeResponse;
 
+
 import com.example.group7.debtcheckapp.Mock.Account;
 import com.example.group7.debtcheckapp.Mock.AccountList;
 import com.example.group7.debtcheckapp.Mock.Claim;
@@ -36,5 +37,12 @@ public class OnlineIntegrationServiceImplements implements OnlineIntegrationServ
         returnCodeResponse response = this.webService.logout(this.sessionId);
         if (response.returnCodeField != 0)
             throw new NoSessionException("Logout not successful");
+    }
+
+    @Override
+    public Account signup(String username, String email, String password) {
+        userLoginResponse response = this.webService.registerNewAccount(username, email, password);
+        this.sessionId = response.sessionId;
+        return new Account(response.account.userName, response.account.email ,response.account.password);
     }
 }

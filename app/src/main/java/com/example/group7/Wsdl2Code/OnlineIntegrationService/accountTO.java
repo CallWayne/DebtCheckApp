@@ -26,6 +26,7 @@ public class accountTO implements KvmSerializable {
     public VectoraccountTOEntry claims;
     public VectoraccountTOEntry1 debts;
     public int id;
+    public String email;
     public String password;
     public String userName;
     
@@ -53,6 +54,16 @@ public class accountTO implements KvmSerializable {
                 id = Integer.parseInt(j.toString());
             }else if (obj!= null && obj instanceof Number){
                 id = (Integer) obj;
+            }
+        }
+        if (soapObject.hasProperty("email"))
+        {
+            Object obj = soapObject.getProperty("email");
+            if (obj != null && obj.getClass().equals(SoapPrimitive.class)){
+                SoapPrimitive j =(SoapPrimitive) obj;
+                email = j.toString();
+            }else if (obj!= null && obj instanceof String){
+                email = (String) obj;
             }
         }
         if (soapObject.hasProperty("password"))
@@ -86,9 +97,12 @@ public class accountTO implements KvmSerializable {
             case 2:
                 return id;
             case 3:
-                return password;
+                return email;
             case 4:
+                return password;
+            case 5:
                 return userName;
+
         }
         return null;
     }
@@ -115,9 +129,13 @@ public class accountTO implements KvmSerializable {
                 break;
             case 3:
                 info.type = PropertyInfo.STRING_CLASS;
-                info.name = "password";
+                info.name = "email";
                 break;
             case 4:
+                info.type = PropertyInfo.STRING_CLASS;
+                info.name = "password";
+                break;
+            case 5:
                 info.type = PropertyInfo.STRING_CLASS;
                 info.name = "userName";
                 break;

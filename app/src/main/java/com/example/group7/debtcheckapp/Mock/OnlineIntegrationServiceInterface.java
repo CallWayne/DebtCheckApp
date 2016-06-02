@@ -8,4 +8,6 @@ public interface OnlineIntegrationServiceInterface {
     public Account login(String username, String password) throws InvalidLoginException;
 
     public void logout() throws NoSessionException;
+
+    public Account signup(String username, String email, String password)throws InvalidLoginException;
 }

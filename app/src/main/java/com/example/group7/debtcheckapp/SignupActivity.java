@@ -1,7 +1,9 @@
 package com.example.group7.debtcheckapp;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
+import com.example.group7.debtcheckapp.Exceptions.InvalidLoginException;
 import com.example.group7.debtcheckapp.Mock.Account;
 import com.example.group7.debtcheckapp.Mock.AccountList;
 
@@ -35,7 +38,7 @@ public class SignupActivity extends AppCompatActivity {
         _signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signup();
+                signup(v);
             }
         });
 
@@ -48,7 +51,7 @@ public class SignupActivity extends AppCompatActivity {
         });
     }
 
-    public void signup() {
+    public void signup(View btnSignup) {
         Log.d(TAG, "Signup");
 
         if (!validate()) {
@@ -64,14 +67,19 @@ public class SignupActivity extends AppCompatActivity {
         progressDialog.setMessage("Creating Account...");
         progressDialog.show();
 
-        String name = _nameText.getText().toString();
+        String username = _nameText.getText().toString();
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
 
-        Account x = new Account(name, email, password);
-        AccountList.setAccList(x);
+        //Account x = new Account(name, email, password);
+        //AccountList.setAccList(x);
 
-        new android.os.Handler().postDelayed(
+        SignupTask signupTask = new SignupTask(btnSignup.getContext());
+        signupTask.execute(username, email, password);
+
+
+
+        /*new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
                         // On complete call either onSignupSuccess or onSignupFailed
@@ -80,16 +88,16 @@ public class SignupActivity extends AppCompatActivity {
                         // onSignupFailed();
                         progressDialog.dismiss();
                     }
-                }, 3000);
+                }, 3000);*/
     }
 
 
-    public void onSignupSuccess() {
+    /*public void onSignupSuccess() {
         _signupButton.setEnabled(true);
         setResult(RESULT_OK, null);
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
-    }
+    }*/
 
     public void onSignupFailed() {
         Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
@@ -125,5 +133,62 @@ public class SignupActivity extends AppCompatActivity {
         }
 
         return valid;
+    }
+
+    private class SignupTask extends AsyncTask<String, Integer, Account> {
+
+        private Context context;
+
+        public SignupTask(Context context)
+        {
+            this.context = context;
+        }
+
+        @Override
+        protected Account doInBackground(String... params) {
+            if(params.length != 3) {
+                return null;
+            }
+
+            String username = params[0];
+            String email = params[1];
+            String password = params[2];
+            DebtCheckAndroidApplication app = (DebtCheckAndroidApplication) getApplication();
+
+            try {
+                Account userAccount = app.getOnlineIntegrationServiceInterface().signup(username, email, password);
+                return userAccount;
+            }
+            catch (InvalidLoginException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        protected void onPostExecute(Account result)
+        {
+            if(result != null)
+            {
+                //erfolgreich registriert
+                DebtCheckAndroidApplication app = (DebtCheckAndroidApplication) getApplication();
+                app.setAccount(result);
+
+                //Toast anzeigen
+                CharSequence text = "Registration erfolgreich! Angemeldeter Benutzername: " + result.getUserName();
+                Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+
+                //Nächste Activity anzeigen
+                _signupButton.setEnabled(true);
+                setResult(RESULT_OK, null);
+                Intent intent = new Intent(context, LoginActivity.class);
+                startActivity(intent);
+            }
+            else
+            {
+                //Toast anzeigen
+                CharSequence text = "Registration fehlgeschlagen!";
+                Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }
