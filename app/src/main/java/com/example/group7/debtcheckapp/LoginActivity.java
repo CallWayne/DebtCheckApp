@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
 
-        String email = _emailText.getText().toString();
+        String username = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
 
         /*ArrayList<Account> x = AccountList.getAccList();
@@ -90,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
             }*/
 
         LoginTask loginTask = new LoginTask(btnLogin.getContext());
-        loginTask.execute(email, password);
+        loginTask.execute(username, password);
 
 
         /*new android.os.Handler().postDelayed(
