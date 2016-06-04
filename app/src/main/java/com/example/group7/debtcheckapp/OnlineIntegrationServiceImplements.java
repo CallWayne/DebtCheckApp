@@ -24,10 +24,10 @@ public class OnlineIntegrationServiceImplements implements OnlineIntegrationServ
     }
 
     @Override
-    public Account login(String username, String password) throws InvalidLoginException {
-        userLoginResponse response = this.webService.login(username, password);
+    public Account login(String email, String password) throws InvalidLoginException {
+        userLoginResponse response = this.webService.login(email, password);
         if (response.returnCodeField != 0)
-            throw new InvalidLoginException("Logout not successful");
+            throw new InvalidLoginException("Login not successful");
         this.sessionId = response.sessionId;
         return new Account(response.account.userName, response.account.password ,response.account.email);
     }
