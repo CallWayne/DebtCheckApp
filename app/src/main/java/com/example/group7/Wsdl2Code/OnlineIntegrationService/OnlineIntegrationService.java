@@ -454,7 +454,7 @@ public class OnlineIntegrationService {
     public userLoginResponse login(String arg0,String arg1,List<HeaderProperty> headers){
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
-        soapEnvelope.dotNet = true;
+        //soapEnvelope.dotNet = true;
         SoapObject soapReq = new SoapObject("http://Online.debtcheck.de/","login");
         soapReq.addProperty("arg0",arg0);
         soapReq.addProperty("arg1",arg1);
@@ -462,9 +462,9 @@ public class OnlineIntegrationService {
         HttpTransportSE httpTransport = new HttpTransportSE(url,timeOut);
         try{
             if (headers!=null){
-                httpTransport.call("http://Online.debtcheck.de/login", soapEnvelope,headers);
+                httpTransport.call("", soapEnvelope,headers);
             }else{
-                httpTransport.call("http://Online.debtcheck.de/login", soapEnvelope);
+                httpTransport.call("", soapEnvelope);
             }
             Object retObj = soapEnvelope.bodyIn;
             if (retObj instanceof SoapFault){
