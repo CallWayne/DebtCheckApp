@@ -14,5 +14,5 @@ public interface OnlineIntegrationServiceInterface {
 
     public Account signup(String username, String email, String password)throws InvalidLoginException;
 
-    public Debt addNewDebt(int sessionId, String username, double amount, String reason) throws InvalidAddNewDebtException;
+    public Debt addNewDebt(String username, BigDecimal amount, String reason) throws InvalidAddNewDebtException;
 }

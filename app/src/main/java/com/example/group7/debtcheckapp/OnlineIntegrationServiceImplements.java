@@ -16,7 +16,7 @@ import com.example.group7.debtcheckapp.Exceptions.InvalidAddNewDebtException;
 
 import com.example.group7.debtcheckapp.Mock.OnlineIntegrationServiceInterface;
 
-
+import java.math.BigDecimal;
 
 
 public class OnlineIntegrationServiceImplements implements OnlineIntegrationServiceInterface {
@@ -52,14 +52,10 @@ public class OnlineIntegrationServiceImplements implements OnlineIntegrationServ
     }
 
     @Override
-    public Debt addNewDebt(int sessionId, String username, double amount, String reason) throws InvalidAddNewDebtException {
-        addNewDebtResponsee response =this.webService.addNewDebt(sessionId, username, amount, reason);
+    public Debt addNewDebt(String username, BigDecimal amount, String reason) throws InvalidAddNewDebtException {
+        addNewDebtResponsee response =this.webService.addNewDebt(this.sessionId, username, amount.doubleValue(), reason);
         if (response.returnCodeField != 0)
             throw new InvalidAddNewDebtException("Add a new Debt not succesful");
         return new Debt(response.debt.debtor, response.debt.creditor, response.debt.amount, response.debt.reason);
-    }
-
-    public int getSessionId() {
-        return this.sessionId;
     }
 }

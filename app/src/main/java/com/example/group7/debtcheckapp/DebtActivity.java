@@ -17,6 +17,8 @@ import com.example.group7.debtcheckapp.Exceptions.InvalidAddNewDebtException;
 import com.example.group7.debtcheckapp.Mock.AccountList;
 import com.example.group7.debtcheckapp.Mock.Debt;
 
+import java.math.BigDecimal;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -25,7 +27,7 @@ public class DebtActivity extends AppCompatActivity {
     private OnlineIntegrationServiceImplements oisi;
 
     @InjectView(R.id.edit_debt) EditText _editDebtText;
-    @InjectView(R.id.spinner_debtor) EditText _editDebtorText; //war vorher ein Spinner
+    @InjectView(R.id.edit_debtor) EditText _editDebtorText; //war vorher ein Spinner
     @InjectView(R.id.edit_reason) EditText _editReasonText;
     @InjectView(R.id.edit_date) EditText _editDateText;
     @InjectView(R.id.button_createNewDebt) Button _createdNewDebtButton;
@@ -71,16 +73,13 @@ public class DebtActivity extends AppCompatActivity {
         progressDialog.setMessage("Erstellt eine neue Schuld...");
         progressDialog.show();
 
-        Integer sessionId = this.oisi.getSessionId();
-        String sessionIdStr = sessionId.toString();
-
         String debtor = _editDebtorText.getTransitionName().toString();
         String amount = _editDebtText.getText().toString();
         String reason = _editReasonText.getText().toString();
         String endDate = _editDateText.getText().toString();
 
         AddNewDebtTask addNewDebtTask = new AddNewDebtTask(btnAddNewDebt.getContext());
-        addNewDebtTask.execute(sessionIdStr, debtor, amount, reason);
+        addNewDebtTask.execute(debtor, amount, reason);
     }
 
     private class AddNewDebtTask extends AsyncTask<String, Integer, Debt> {
@@ -94,21 +93,19 @@ public class DebtActivity extends AppCompatActivity {
 
         @Override
         protected Debt doInBackground(String... params) {
-            if(params.length != 4) {
+            if(params.length != 3) {
                 return null;
             }
 
-            String sessionId = params[0];
-            String debtor = params[1];
-            String amount = params[2];
-            String reason = params[3];
+            String debtor = params[0];
+            String amount = params[1];
+            String reason = params[2];
             DebtCheckAndroidApplication app = (DebtCheckAndroidApplication) getApplication();
 
-            int sessionIdInt = Integer.parseInt(sessionId);
-            double amountDbl = Double.parseDouble(amount);
+            BigDecimal amountBd = new BigDecimal(amount);
 
             try {
-                Debt userDebt = app.getOnlineIntegrationServiceInterface().addNewDebt(sessionIdInt, debtor, amountDbl, reason);
+                Debt userDebt = app.getOnlineIntegrationServiceInterface().addNewDebt(debtor, amountBd, reason);
                 return userDebt;
             }
             catch (InvalidAddNewDebtException e) {
