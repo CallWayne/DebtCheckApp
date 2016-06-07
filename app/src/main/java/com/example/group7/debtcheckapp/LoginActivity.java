@@ -63,8 +63,7 @@ public class LoginActivity extends AppCompatActivity {
 
         _loginButton.setEnabled(false);
 
-        final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
-                R.style.AppTheme_Dark_Dialog);
+        final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this, R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
@@ -72,57 +71,15 @@ public class LoginActivity extends AppCompatActivity {
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
 
-        /*ArrayList<Account> x = AccountList.getAccList();
-
-           
-            for (int i = 0; i < x.size(); i++) {
-                Account y = x.get(i);
-
-                if (email.equals(y.getEmail()) && password.equals(y.getPassword())) {
-                    onLoginSuccess();
-                } else {
-                    onLoginFailed();
-                }
-
-            }*/
-
         LoginTask loginTask = new LoginTask(btnLogin.getContext());
         loginTask.execute(email, password);
-
-
-        /*new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        // On complete call either onLoginSuccess or onLoginFailed
-                        onLoginSuccess();
-                        // onLoginFailed();
-                        progressDialog.dismiss();
-                    }
-                }, 3000);*/
     }
-
-
-    /*@Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_SIGNUP) {
-            if (resultCode == RESULT_OK) {
-
-                this.finish();
-            }
-        }
-    }*/
 
     @Override
     public void onBackPressed() {
         // disable going back to the MainActivity
         moveTaskToBack(true);
     }
-
-    /*private void onLoginSuccess() {
-        _loginButton.setEnabled(true);
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-    }*/
 
     private void onLoginFailed() {
         CharSequence text = "Login fehlgeschlagen!";
@@ -204,9 +161,10 @@ public class LoginActivity extends AppCompatActivity {
             }
             else
             {
-                //Toast anzeigen
-                CharSequence text = "Login fehlgeschlagen!";
-                Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+                //Bei Fehler die Methode onLoginFailed() aufrufen
+                onLoginFailed();
+                Intent intent = new Intent(context, LoginActivity.class);
+                startActivity(intent);
             }
         }
     }

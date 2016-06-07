@@ -25,7 +25,7 @@ public class DebtActivity extends AppCompatActivity {
     private OnlineIntegrationServiceImplements oisi;
 
     @InjectView(R.id.edit_debt) EditText _editDebtText;
-    @InjectView(R.id.spinner_debtor) Spinner _debtorSpinner;
+    @InjectView(R.id.spinner_debtor) EditText _editDebtorText; //war vorher ein Spinner
     @InjectView(R.id.edit_reason) EditText _editReasonText;
     @InjectView(R.id.edit_date) EditText _editDateText;
     @InjectView(R.id.button_createNewDebt) Button _createdNewDebtButton;
@@ -36,13 +36,13 @@ public class DebtActivity extends AppCompatActivity {
         setContentView(R.layout.activity_debt);
         ButterKnife.inject(this);
 
-        Spinner spinner = (Spinner) findViewById(R.id.spinner_debtor);
+        /*Spinner spinner = (Spinner) findViewById(R.id.edit_debtor);
         // Create an ArrayAdapter using the string array and a default spinner layout
         UsersAdapter adapter = new UsersAdapter(this, AccountList.getAccList());
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
-        spinner.setAdapter(adapter);
+        spinner.setAdapter(adapter);*/
 
         _createdNewDebtButton.setOnClickListener(new View.OnClickListener() {
 
@@ -74,7 +74,7 @@ public class DebtActivity extends AppCompatActivity {
         Integer sessionId = this.oisi.getSessionId();
         String sessionIdStr = sessionId.toString();
 
-        String debtor = _debtorSpinner.getTransitionName().toString();
+        String debtor = _editDebtorText.getTransitionName().toString();
         String amount = _editDebtText.getText().toString();
         String reason = _editReasonText.getText().toString();
         String endDate = _editDateText.getText().toString();
