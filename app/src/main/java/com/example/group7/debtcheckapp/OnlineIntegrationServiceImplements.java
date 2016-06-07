@@ -2,21 +2,20 @@ package com.example.group7.debtcheckapp;
 
 import com.example.group7.Wsdl2Code.OnlineIntegrationService.OnlineIntegrationService;
 import com.example.group7.Wsdl2Code.OnlineIntegrationService.addNewDebtResponsee;
+import com.example.group7.Wsdl2Code.OnlineIntegrationService.debtListResponse;
 import com.example.group7.Wsdl2Code.OnlineIntegrationService.userLoginResponse;
-import com.example.group7.Wsdl2Code.OnlineIntegrationService.returnCodeResponse;
 
 import com.example.group7.debtcheckapp.Mock.Account;
-import com.example.group7.debtcheckapp.Mock.AccountList;
-import com.example.group7.debtcheckapp.Mock.Claim;
 import com.example.group7.debtcheckapp.Mock.Debt;
 
 import com.example.group7.debtcheckapp.Exceptions.InvalidLoginException;
-import com.example.group7.debtcheckapp.Exceptions.NoSessionException;
 import com.example.group7.debtcheckapp.Exceptions.InvalidAddNewDebtException;
 
 import com.example.group7.debtcheckapp.Mock.OnlineIntegrationServiceInterface;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+
 
 
 public class OnlineIntegrationServiceImplements implements OnlineIntegrationServiceInterface {
@@ -38,10 +37,8 @@ public class OnlineIntegrationServiceImplements implements OnlineIntegrationServ
     }
 
     @Override
-    public void logout() throws NoSessionException {
-        returnCodeResponse response = this.webService.logout(this.sessionId);
-        if (response.returnCodeField != 0)
-            throw new NoSessionException("Logout not successful");
+    public void logout()  {
+        webService.logout(this.sessionId);
     }
 
     @Override
@@ -53,9 +50,23 @@ public class OnlineIntegrationServiceImplements implements OnlineIntegrationServ
 
     @Override
     public Debt addNewDebt(String username, BigDecimal amount, String reason) throws InvalidAddNewDebtException {
-        addNewDebtResponsee response =this.webService.addNewDebt(this.sessionId, username, amount.doubleValue(), reason);
+        addNewDebtResponsee response = this.webService.addNewDebt(this.sessionId, username, amount.doubleValue(), reason);
         if (response.returnCodeField != 0)
             throw new InvalidAddNewDebtException("Add a new Debt not succesful");
         return new Debt(response.debt.debtor, response.debt.creditor, response.debt.amount, response.debt.reason);
+    }
+
+    @Override
+    public ArrayList<Debt> getAllDebts(){
+        debtListResponse response = this.webService.getMyDebts(this.sessionId);
+        if(response.debtList == null){
+            return null;
+        }
+        ArrayList debtList = new ArrayList<Debt>();
+        for(int i = 0; i < response.debtList.size(); i++) {
+            Debt debt = new Debt(response.debtList.get(i).debtor, response.debtList.get(i).creditor, response.debtList.get(i).amount, response.debtList.get(i).reason);
+            debtList.add(debt);
+        }
+        return debtList;
     }
 }

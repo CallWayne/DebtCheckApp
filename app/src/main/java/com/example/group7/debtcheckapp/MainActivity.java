@@ -1,6 +1,7 @@
 package com.example.group7.debtcheckapp;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -11,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity
@@ -72,17 +74,39 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(this, ProfileActivity.class);
             startActivity(intent);
         }
-        else if (id == R.id.nav_friends) {
-            Intent intent = new Intent(this, FriendsListActivity.class);
+        else if (id == R.id.nav_debtList) {
+            Intent intent = new Intent(this, DebtListActivity.class);
             startActivity(intent);
         }
         else if (id == R.id.nav_addfriends) {
             Intent intent = new Intent(this, FriendsSearchActivity.class);
             startActivity(intent);
         }
+        else if (id == R.id.nav_logout) {
+            LogoutTask logoutTask = new LogoutTask();
+            logoutTask.execute();
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public class LogoutTask extends AsyncTask<Void, Void, Void>
+    {
+        @Override
+        protected Void doInBackground(Void... params)
+        {
+            while (!isCancelled())
+            {
+                DebtCheckAndroidApplication app = (DebtCheckAndroidApplication) getApplication();
+                app.getOnlineIntegrationServiceInterface().logout();
+                CharSequence text = "Logout erfolgreich!";
+                Toast.makeText(getBaseContext(), text, Toast.LENGTH_SHORT).show();
+            }
+            return null;
+        }
     }
 }

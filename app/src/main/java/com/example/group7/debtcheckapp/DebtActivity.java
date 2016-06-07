@@ -40,7 +40,7 @@ public class DebtActivity extends AppCompatActivity {
 
         /*Spinner spinner = (Spinner) findViewById(R.id.edit_debtor);
         // Create an ArrayAdapter using the string array and a default spinner layout
-        UsersAdapter adapter = new UsersAdapter(this, AccountList.getAccList());
+        DebtAdapter adapter = new DebtAdapter(this, AccountList.getAccList());
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
@@ -53,13 +53,6 @@ public class DebtActivity extends AppCompatActivity {
                 addNewDebt(v);
             }
         });
-        /*final Button button = (Button) findViewById(R.id.button_createNewDebt);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-            }
-        });*/
     }
 
     public void addNewDebt(View btnAddNewDebt) {
@@ -73,7 +66,7 @@ public class DebtActivity extends AppCompatActivity {
         progressDialog.setMessage("Erstellt eine neue Schuld...");
         progressDialog.show();
 
-        String debtor = _editDebtorText.getTransitionName().toString();
+        String debtor = _editDebtorText.getText().toString();
         String amount = _editDebtText.getText().toString();
         String reason = _editReasonText.getText().toString();
         String endDate = _editDateText.getText().toString();

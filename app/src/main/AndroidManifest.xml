@@ -40,8 +40,8 @@
             android:name=".SettingsActivity"
             android:label="Settings" />
         <activity
-            android:name=".FriendsListActivity"
-            android:label="Friend List" />
+            android:name=".DebtListActivity"
+            android:label="Debt List" />
         <activity
             android:name=".FriendsActivity"
             android:label="Friend" />

@@ -16,6 +16,7 @@ import com.example.group7.Wsdl2Code.OnlineIntegrationService.WS_Enums.*;
 import java.util.List;
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.SoapFault;
+import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 import org.ksoap2.HeaderProperty;
@@ -239,16 +240,16 @@ public class OnlineIntegrationService {
     public debtListResponse getMyDebts(int arg0,List<HeaderProperty> headers){
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
-        soapEnvelope.dotNet = true;
+        //soapEnvelope.dotNet = true;
         SoapObject soapReq = new SoapObject("http://Online.debtcheck.de/","getMyDebts");
         soapReq.addProperty("arg0",arg0);
         soapEnvelope.setOutputSoapObject(soapReq);
         HttpTransportSE httpTransport = new HttpTransportSE(url,timeOut);
         try{
             if (headers!=null){
-                httpTransport.call("http://Online.debtcheck.de/getMyDebts", soapEnvelope,headers);
+                httpTransport.call("", soapEnvelope,headers);
             }else{
-                httpTransport.call("http://Online.debtcheck.de/getMyDebts", soapEnvelope);
+                httpTransport.call("", soapEnvelope);
             }
             Object retObj = soapEnvelope.bodyIn;
             if (retObj instanceof SoapFault){
@@ -259,13 +260,27 @@ public class OnlineIntegrationService {
             }else{
                 SoapObject result=(SoapObject)retObj;
                 if (result.getPropertyCount() > 0){
+
                     Object obj = result.getProperty(0);
-                    SoapObject j = (SoapObject)obj;
-                    debtListResponse resultVariable =  new debtListResponse (j);
+                    //holt alle Daten vom Response
+                    SoapObject allData = (SoapObject)obj;
+                    debtListResponse resultVariable =  new debtListResponse (allData);
+                    //holt die Comments von allen Daten im Response
+                    for(int i=0; i < allData.getPropertyCount();i++){
+                        PropertyInfo pi = new PropertyInfo();
+                        allData.getPropertyInfo(i,pi);
+                        if(pi.name.equals("debtList")){
+                            SoapObject debts = (SoapObject)allData.getProperty(i);
+                            debtTO c = new debtTO(debts);
+                            resultVariable.debtList.add(c);
+                        }
+
+                    }
                     return resultVariable;
+                }
                     
                 }
-            }
+
         }catch (Exception e) {
             if (eventHandler != null)
                 eventHandler.Wsdl2CodeFinishedWithException(e);
@@ -309,16 +324,16 @@ public class OnlineIntegrationService {
     public returnCodeResponse logout(int arg0,List<HeaderProperty> headers){
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
-        soapEnvelope.dotNet = true;
+        //soapEnvelope.dotNet = true;
         SoapObject soapReq = new SoapObject("http://Online.debtcheck.de/","logout");
         soapReq.addProperty("arg0",arg0);
         soapEnvelope.setOutputSoapObject(soapReq);
         HttpTransportSE httpTransport = new HttpTransportSE(url,timeOut);
         try{
             if (headers!=null){
-                httpTransport.call("http://Online.debtcheck.de/logout", soapEnvelope,headers);
+                httpTransport.call("", soapEnvelope,headers);
             }else{
-                httpTransport.call("http://Online.debtcheck.de/logout", soapEnvelope);
+                httpTransport.call("", soapEnvelope);
             }
             Object retObj = soapEnvelope.bodyIn;
             if (retObj instanceof SoapFault){
@@ -379,7 +394,7 @@ public class OnlineIntegrationService {
     public payDebtResponsee payDebt(int arg0,String arg1,double arg2,boolean arg2Specified,int arg3,List<HeaderProperty> headers){
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
-        soapEnvelope.dotNet = true;
+        //soapEnvelope.dotNet = true;
         SoapObject soapReq = new SoapObject("http://Online.debtcheck.de/","payDebt");
         MarshalFloat marshalFloat = new MarshalFloat();
         marshalFloat.register(soapEnvelope);
@@ -392,9 +407,9 @@ public class OnlineIntegrationService {
         HttpTransportSE httpTransport = new HttpTransportSE(url,timeOut);
         try{
             if (headers!=null){
-                httpTransport.call("http://Online.debtcheck.de/payDebt", soapEnvelope,headers);
+                httpTransport.call("", soapEnvelope,headers);
             }else{
-                httpTransport.call("http://Online.debtcheck.de/payDebt", soapEnvelope);
+                httpTransport.call("", soapEnvelope);
             }
             Object retObj = soapEnvelope.bodyIn;
             if (retObj instanceof SoapFault){
@@ -527,16 +542,16 @@ public class OnlineIntegrationService {
     public debtListResponse getMyClaims(int arg0,List<HeaderProperty> headers){
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
-        soapEnvelope.dotNet = true;
+        //soapEnvelope.dotNet = true;
         SoapObject soapReq = new SoapObject("http://Online.debtcheck.de/","getMyClaims");
         soapReq.addProperty("arg0",arg0);
         soapEnvelope.setOutputSoapObject(soapReq);
         HttpTransportSE httpTransport = new HttpTransportSE(url,timeOut);
         try{
             if (headers!=null){
-                httpTransport.call("http://Online.debtcheck.de/getMyClaims", soapEnvelope,headers);
+                httpTransport.call("", soapEnvelope,headers);
             }else{
-                httpTransport.call("http://Online.debtcheck.de/getMyClaims", soapEnvelope);
+                httpTransport.call("", soapEnvelope);
             }
             Object retObj = soapEnvelope.bodyIn;
             if (retObj instanceof SoapFault){
