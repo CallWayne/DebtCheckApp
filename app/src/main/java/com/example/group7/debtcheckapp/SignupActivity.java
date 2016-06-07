@@ -174,7 +174,7 @@ public class SignupActivity extends AppCompatActivity {
                 app.setAccount(result);
 
                 //Toast anzeigen
-                CharSequence text = "Registration erfolgreich! Angemeldeter Benutzername: " + result.getUserName();
+                CharSequence text = "Registration erfolgreich! Angemeldet als " + result.getUserName();
                 Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
 
                 //Nächste Activity anzeigen

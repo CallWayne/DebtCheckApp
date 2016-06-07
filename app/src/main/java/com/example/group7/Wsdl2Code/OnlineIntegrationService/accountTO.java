@@ -56,6 +56,16 @@ public class accountTO implements KvmSerializable {
                 id = (Integer) obj;
             }
         }
+        if (soapObject.hasProperty("userName"))
+        {
+            Object obj = soapObject.getProperty("userName");
+            if (obj != null && obj.getClass().equals(SoapPrimitive.class)){
+                SoapPrimitive j =(SoapPrimitive) obj;
+                userName = j.toString();
+            }else if (obj!= null && obj instanceof String){
+                userName = (String) obj;
+            }
+        }
         if (soapObject.hasProperty("email"))
         {
             Object obj = soapObject.getProperty("email");
@@ -74,16 +84,6 @@ public class accountTO implements KvmSerializable {
                 password = j.toString();
             }else if (obj!= null && obj instanceof String){
                 password = (String) obj;
-            }
-        }
-        if (soapObject.hasProperty("userName"))
-        {
-            Object obj = soapObject.getProperty("userName");
-            if (obj != null && obj.getClass().equals(SoapPrimitive.class)){
-                SoapPrimitive j =(SoapPrimitive) obj;
-                userName = j.toString();
-            }else if (obj!= null && obj instanceof String){
-                userName = (String) obj;
             }
         }
     }
@@ -109,7 +109,7 @@ public class accountTO implements KvmSerializable {
     
     @Override
     public int getPropertyCount() {
-        return 5;
+        return 6;
     }
     
     @Override

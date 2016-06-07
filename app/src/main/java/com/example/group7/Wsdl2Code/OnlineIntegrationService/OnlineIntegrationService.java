@@ -128,13 +128,13 @@ public class OnlineIntegrationService {
         return null;
     }
     
-    public void addNewDebtAsync(int arg0,String arg1,double arg2,boolean arg2Specified) throws Exception{
+    public void addNewDebtAsync(int arg0,String arg1,double arg2,String arg3) throws Exception{ //boolean arg2Specified
         if (this.eventHandler == null)
             throw new Exception("Async Methods Requires IWsdl2CodeEvents");
-        addNewDebtAsync(arg0, arg1, arg2, arg2Specified, null);
+        addNewDebtAsync(arg0, arg1, arg2, arg3, null); //arg2Specified
     }
     
-    public void addNewDebtAsync(final int arg0,final String arg1,final double arg2,final boolean arg2Specified,final List<HeaderProperty> headers) throws Exception{
+    public void addNewDebtAsync(final int arg0,final String arg1,final double arg2,final String arg3,final List<HeaderProperty> headers) throws Exception{ //,final boolean arg2Specified
         
         new AsyncTask<Void, Void, addNewDebtResponsee>(){
             @Override
@@ -143,7 +143,7 @@ public class OnlineIntegrationService {
             };
             @Override
             protected addNewDebtResponsee doInBackground(Void... params) {
-                return addNewDebt(arg0, arg1, arg2, arg2Specified, headers);
+                return addNewDebt(arg0, arg1, arg2, arg3, headers); //arg2Specified
             }
             @Override
             protected void onPostExecute(addNewDebtResponsee result)
@@ -156,28 +156,29 @@ public class OnlineIntegrationService {
         }.execute();
     }
     
-    public addNewDebtResponsee addNewDebt(int arg0,String arg1,double arg2,boolean arg2Specified){
-        return addNewDebt(arg0, arg1, arg2, arg2Specified, null);
+    public addNewDebtResponsee addNewDebt(int arg0,String arg1,double arg2,String arg3){
+        return addNewDebt(arg0, arg1, arg2, arg3, null);
     }
     
-    public addNewDebtResponsee addNewDebt(int arg0,String arg1,double arg2,boolean arg2Specified,List<HeaderProperty> headers){
+    public addNewDebtResponsee addNewDebt(int arg0,String arg1,double arg2,String arg3, List<HeaderProperty> headers){
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
-        soapEnvelope.dotNet = true;
+        //soapEnvelope.dotNet = true;
         SoapObject soapReq = new SoapObject("http://Online.debtcheck.de/","addNewDebt");
         MarshalFloat marshalFloat = new MarshalFloat();
         marshalFloat.register(soapEnvelope);
         soapReq.addProperty("arg0",arg0);
         soapReq.addProperty("arg1",arg1);
         soapReq.addProperty("arg2",arg2);
-        soapReq.addProperty("arg2Specified",arg2Specified);
+        soapReq.addProperty("arg3",arg3);
+        //soapReq.addProperty("arg2Specified",arg2Specified);
         soapEnvelope.setOutputSoapObject(soapReq);
         HttpTransportSE httpTransport = new HttpTransportSE(url,timeOut);
         try{
             if (headers!=null){
-                httpTransport.call("http://Online.debtcheck.de/addNewDebt", soapEnvelope,headers);
+                httpTransport.call("", soapEnvelope,headers);
             }else{
-                httpTransport.call("http://Online.debtcheck.de/addNewDebt", soapEnvelope);
+                httpTransport.call("", soapEnvelope);
             }
             Object retObj = soapEnvelope.bodyIn;
             if (retObj instanceof SoapFault){

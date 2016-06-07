@@ -1,26 +1,40 @@
 package com.example.group7.debtcheckapp;
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.example.group7.debtcheckapp.Exceptions.InvalidAddNewDebtException;
 import com.example.group7.debtcheckapp.Mock.AccountList;
+import com.example.group7.debtcheckapp.Mock.Debt;
 
-import java.util.Calendar;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 public class DebtActivity extends AppCompatActivity {
+    private static final String TAG = "DebtActivity";
+    private OnlineIntegrationServiceImplements oisi;
+
+    @InjectView(R.id.edit_debt) EditText _editDebtText;
+    @InjectView(R.id.spinner_debtor) Spinner _debtorSpinner;
+    @InjectView(R.id.edit_reason) EditText _editReasonText;
+    @InjectView(R.id.edit_date) EditText _editDateText;
+    @InjectView(R.id.button_createNewDebt) Button _createdNewDebtButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_debt);
+        ButterKnife.inject(this);
 
         Spinner spinner = (Spinner) findViewById(R.id.spinner_debtor);
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -30,12 +44,102 @@ public class DebtActivity extends AppCompatActivity {
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
 
-        final Button button = (Button) findViewById(R.id.button_createNewDebt);
+        _createdNewDebtButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                addNewDebt(v);
+            }
+        });
+        /*final Button button = (Button) findViewById(R.id.button_createNewDebt);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
             }
-        });
+        });*/
+    }
+
+    public void addNewDebt(View btnAddNewDebt) {
+        Log.d(TAG, "Add a new Debt");
+
+        _createdNewDebtButton.setEnabled(false);
+
+        final ProgressDialog  progressDialog = new ProgressDialog(DebtActivity.this,
+                R.style.AppTheme_Dark_Dialog);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Erstellt eine neue Schuld...");
+        progressDialog.show();
+
+        Integer sessionId = this.oisi.getSessionId();
+        String sessionIdStr = sessionId.toString();
+
+        String debtor = _debtorSpinner.getTransitionName().toString();
+        String amount = _editDebtText.getText().toString();
+        String reason = _editReasonText.getText().toString();
+        String endDate = _editDateText.getText().toString();
+
+        AddNewDebtTask addNewDebtTask = new AddNewDebtTask(btnAddNewDebt.getContext());
+        addNewDebtTask.execute(sessionIdStr, debtor, amount, reason);
+    }
+
+    private class AddNewDebtTask extends AsyncTask<String, Integer, Debt> {
+
+        private Context context;
+
+        public AddNewDebtTask(Context context)
+        {
+            this.context = context;
+        }
+
+        @Override
+        protected Debt doInBackground(String... params) {
+            if(params.length != 4) {
+                return null;
+            }
+
+            String sessionId = params[0];
+            String debtor = params[1];
+            String amount = params[2];
+            String reason = params[3];
+            DebtCheckAndroidApplication app = (DebtCheckAndroidApplication) getApplication();
+
+            int sessionIdInt = Integer.parseInt(sessionId);
+            double amountDbl = Double.parseDouble(amount);
+
+            try {
+                Debt userDebt = app.getOnlineIntegrationServiceInterface().addNewDebt(sessionIdInt, debtor, amountDbl, reason);
+                return userDebt;
+            }
+            catch (InvalidAddNewDebtException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        protected void onPostExecute(Debt result)
+        {
+            if(result != null)
+            {
+                //erfolgreich eingeloggt
+                DebtCheckAndroidApplication app = (DebtCheckAndroidApplication) getApplication();
+                app.setDebt(result);
+
+                //Toast anzeigen
+                CharSequence text = "Erstellen einer neuen Schuld erfolgreich! Die Höhe der Schuld beträgt " + result.getAmount();
+                Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+
+                //Nächste Activity anzeigen
+                _createdNewDebtButton.setEnabled(true);
+                Intent intent = new Intent(context, MainActivity.class);
+                startActivity(intent);
+            }
+            else
+            {
+                //Toast anzeigen
+                CharSequence text = "Erstellen einer neuen Schuld fehlgeschlagen!";
+                Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

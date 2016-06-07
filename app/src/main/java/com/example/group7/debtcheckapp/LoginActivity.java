@@ -3,7 +3,6 @@ package com.example.group7.debtcheckapp;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.IntegerRes;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.content.Intent;
@@ -16,8 +15,6 @@ import android.os.AsyncTask;
 
 import com.example.group7.debtcheckapp.Exceptions.InvalidLoginException;
 import com.example.group7.debtcheckapp.Mock.Account;
-import com.example.group7.debtcheckapp.Mock.AccountList;
-import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -72,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
 
-        String username = _emailText.getText().toString();
+        String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
 
         /*ArrayList<Account> x = AccountList.getAccList();
@@ -90,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
             }*/
 
         LoginTask loginTask = new LoginTask(btnLogin.getContext());
-        loginTask.execute(username, password);
+        loginTask.execute(email, password);
 
 
         /*new android.os.Handler().postDelayed(
@@ -197,7 +194,7 @@ public class LoginActivity extends AppCompatActivity {
                 app.setAccount(result);
 
                 //Toast anzeigen
-                CharSequence text = "Login erfolgreich! Angemeldeter Benutzername: " + result.getUserName();
+                CharSequence text = "Login erfolgreich! Angemeldet als " + result.getUserName();
                 Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
 
                 //Nächste Activity anzeigen

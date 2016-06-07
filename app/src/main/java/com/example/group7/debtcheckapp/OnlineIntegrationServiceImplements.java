@@ -1,9 +1,9 @@
 package com.example.group7.debtcheckapp;
 
 import com.example.group7.Wsdl2Code.OnlineIntegrationService.OnlineIntegrationService;
+import com.example.group7.Wsdl2Code.OnlineIntegrationService.addNewDebtResponsee;
 import com.example.group7.Wsdl2Code.OnlineIntegrationService.userLoginResponse;
 import com.example.group7.Wsdl2Code.OnlineIntegrationService.returnCodeResponse;
-
 
 import com.example.group7.debtcheckapp.Mock.Account;
 import com.example.group7.debtcheckapp.Mock.AccountList;
@@ -12,7 +12,12 @@ import com.example.group7.debtcheckapp.Mock.Debt;
 
 import com.example.group7.debtcheckapp.Exceptions.InvalidLoginException;
 import com.example.group7.debtcheckapp.Exceptions.NoSessionException;
+import com.example.group7.debtcheckapp.Exceptions.InvalidAddNewDebtException;
+
 import com.example.group7.debtcheckapp.Mock.OnlineIntegrationServiceInterface;
+
+
+
 
 public class OnlineIntegrationServiceImplements implements OnlineIntegrationServiceInterface {
 
@@ -44,5 +49,17 @@ public class OnlineIntegrationServiceImplements implements OnlineIntegrationServ
         userLoginResponse response = this.webService.registerNewAccount(username, email, password);
         this.sessionId = response.sessionId;
         return new Account(response.account.userName, response.account.email ,response.account.password);
+    }
+
+    @Override
+    public Debt addNewDebt(int sessionId, String username, double amount, String reason) throws InvalidAddNewDebtException {
+        addNewDebtResponsee response =this.webService.addNewDebt(sessionId, username, amount, reason);
+        if (response.returnCodeField != 0)
+            throw new InvalidAddNewDebtException("Add a new Debt not succesful");
+        return new Debt(response.debt.debtor, response.debt.creditor, response.debt.amount, response.debt.reason);
+    }
+
+    public int getSessionId() {
+        return this.sessionId;
     }
 }

@@ -1,14 +1,7 @@
 package com.example.group7.debtcheckapp.Mock;
 
-/**
- * Created by niklasschluter on 17.05.16.
- */
-
-
-        import java.io.Serializable;
-        import java.math.BigDecimal;
-
-
+import java.io.Serializable;
+//import java.math.BigDecimal;
 
 public class Debt implements Serializable {
 
@@ -16,38 +9,56 @@ public class Debt implements Serializable {
     private static int lastID=0;
 
     private int id;
-    private BigDecimal amount;
-    private Account owner;
+    private double amount;
+    private String reason;
+    private String debtor;
+    private String creditor;
 
-    public Debt(Account owner, BigDecimal amount) {
+
+    public Debt(String debtor, String creditor, double amount, String reason) {
         this.id = ++lastID;
         this.amount = amount;
-        this.owner = owner;
-        this.owner.addNewDebt(this);
+        this.debtor = debtor;
+        this.creditor = creditor;
+        this.reason = reason;
+        //this.owner = owner;
+        //this.owner.addNewDebt(this);
     }
 
     public int getId() {
         return id;
     }
 
-    public BigDecimal getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public Account getOwner() {
+    /*public Account getOwner() {
         return owner;
+    }*/
+
+    public String getReason() {
+        return reason;
     }
 
-    public void increase(BigDecimal amount) {
-        this.amount = this.amount.add(amount);
+    public String getDebtor() {
+        return debtor;
     }
 
-    public void decrease(BigDecimal amount) {
-        this.amount = this.amount.subtract(amount);
+    public String getCreditor() {
+        return creditor;
+    }
+
+    public void increase(double amount) {
+        this.amount = this.amount + amount;
+    }
+
+    public void decrease(double amount) {
+        this.amount = this.amount - amount;
     }
 
     public String toString() {
-        return "Debt " + this.id + " (Amount=" + this.amount + ", Owner=" + this.getOwner().getUserName() + ")";
+        return "Debt " + this.id + " (Amount=" + this.amount + ", Owner=" + this.debtor + ")";
     }
 
 }

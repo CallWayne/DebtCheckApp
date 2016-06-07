@@ -1,14 +1,7 @@
 package com.example.group7.debtcheckapp.Mock;
 
-/**
- * Created by niklasschluter on 17.05.16.
- */
-
-
-        import java.io.Serializable;
+import java.io.Serializable;
         import java.math.BigDecimal;
-
-
 
 public class Claim implements Serializable {
 
