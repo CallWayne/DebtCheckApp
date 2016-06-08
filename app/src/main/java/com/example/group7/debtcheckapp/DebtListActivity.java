@@ -5,9 +5,16 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.group7.Wsdl2Code.OnlineIntegrationService.debt;
 import com.example.group7.debtcheckapp.Exceptions.InvalidLoginException;
 import com.example.group7.debtcheckapp.Mock.Account;
 import com.example.group7.debtcheckapp.Mock.AccountList;
@@ -20,6 +27,7 @@ public class DebtListActivity extends AppCompatActivity {
 
     ArrayList<Debt> debtList = new ArrayList<>();
     ListView listView ;
+    Debt d;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,14 +45,32 @@ public class DebtListActivity extends AppCompatActivity {
 
         listView = (ListView) findViewById(R.id.listview_DebtList);
         listView.setAdapter(new DebtAdapter(this, debtList));
-
-
-
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id){
+                d = (Debt) listView.getItemAtPosition(position);
+                registerForContextMenu(listView);
+                openContextMenu(listView);
+                return true;
+            }
+        });
     }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo info){
+        super.onCreateContextMenu(menu, v, info);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_debtlist, menu);
+    }
 
-
-
+    @Override
+    public boolean onContextItemSelected(MenuItem item){
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch(item.getItemId()){
+            case R.id.btn_payDebt: return true;
+        }
+        return true;
+    }
 
     private class DebtListTask extends AsyncTask<Void, Void, ArrayList<Debt>> {
 
