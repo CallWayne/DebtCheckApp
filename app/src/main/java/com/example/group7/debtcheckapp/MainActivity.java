@@ -12,11 +12,27 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.group7.debtcheckapp.Mock.Debt;
+
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    @InjectView(R.id.text_allDebts) TextView _text_allDebts;
+    @InjectView(R.id.text_allClaims) TextView _text_allClaims;
+
+    ArrayList<Debt> debtList;
+    ArrayList<Debt> claimList;
 
 
     @Override
@@ -25,6 +41,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        ButterKnife.inject(this);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -42,6 +59,46 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
+
+        setText();
+    }
+
+    public void setText(){
+        DebtListTask debtListTask = new DebtListTask();
+        try {
+            debtList = debtListTask.execute().get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        ClaimListTask claimListTask = new ClaimListTask();
+        try {
+            claimList = claimListTask.execute().get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        double allDebts=0;
+        if(debtList!=null){
+            for(int i = 0; i<debtList.size();i++){
+                Debt x = debtList.get(i);
+                allDebts = allDebts + x.getAmount();
+            }
+        }
+        _text_allDebts.setText(String.valueOf(allDebts));
+
+        double allClaims=0;
+        if(claimList!=null){
+            for(int i = 0; i<claimList.size();i++){
+                Debt x = claimList.get(i);
+                allClaims = allClaims + x.getAmount();
+            }
+        }
+        _text_allClaims.setText(String.valueOf(allClaims));
     }
 
     public void newDebt(){
@@ -109,6 +166,26 @@ public class MainActivity extends AppCompatActivity
                     e.printStackTrace();
                 }
             return null;
+        }
+    }
+
+    private class DebtListTask extends AsyncTask<Void, Void, ArrayList<Debt>> {
+
+        @Override
+        protected ArrayList<Debt> doInBackground(Void... params) {
+            DebtCheckAndroidApplication app = (DebtCheckAndroidApplication) getApplication();
+            ArrayList<Debt> debtList = app.getOnlineIntegrationServiceInterface().getAllDebts();
+            return debtList;
+        }
+    }
+
+    private class ClaimListTask extends AsyncTask<Void, Void, ArrayList<Debt>> {
+
+        @Override
+        protected ArrayList<Debt> doInBackground(Void... params) {
+            DebtCheckAndroidApplication app = (DebtCheckAndroidApplication) getApplication();
+            ArrayList<Debt> claimList = app.getOnlineIntegrationServiceInterface().getAllClaims();
+            return claimList;
         }
     }
 }

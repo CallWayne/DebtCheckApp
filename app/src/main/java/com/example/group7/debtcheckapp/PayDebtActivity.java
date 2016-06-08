@@ -60,12 +60,6 @@ public class PayDebtActivity extends AppCompatActivity {
         if(debtAmount >= amountDbl) {
             PayDebtTask payDebtTask = new PayDebtTask(view.getContext());
             payDebtTask.execute(amount);
-            CharSequence text = "Erfolgreich zurückgezahlt";
-            Toast.makeText(getBaseContext(), text, Toast.LENGTH_SHORT).show();
-
-            //Nächste Activity anzeigen
-            Intent intent = new Intent(getBaseContext(), DebtListActivity.class);
-            startActivity(intent);
         }
         else {
             CharSequence text = "Du kannst nicht mehr Bezahlen als du jemanden schuldest!";
@@ -91,6 +85,12 @@ public class PayDebtActivity extends AppCompatActivity {
                 BigDecimal amountBd = new BigDecimal(amount);
 
                 app.getOnlineIntegrationServiceInterface().payDebt(debt.getCreditor(), amountBd, debt.getId());
+
+                CharSequence text = "Erfolgreich zurückgezahlt";
+                Toast.makeText(getBaseContext(), text, Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                startActivity(intent);
             }
             catch(Exception e){
                 e.printStackTrace();
