@@ -19,9 +19,9 @@
                     android:icon="@drawable/ic_menu_share"
                     android:title="Debt List" />
                 <item
-                    android:id="@+id/nav_addfriends"
+                    android:id="@+id/nav_claimList"
                     android:icon="@drawable/ic_menu_share"
-                    android:title="Add a Friend" />
+                    android:title="Claim List" />
                 <item
                     android:id="@+id/nav_logout"
                     android:title="Logout"

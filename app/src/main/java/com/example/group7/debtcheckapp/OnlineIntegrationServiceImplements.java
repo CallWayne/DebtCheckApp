@@ -3,6 +3,7 @@ package com.example.group7.debtcheckapp;
 import com.example.group7.Wsdl2Code.OnlineIntegrationService.OnlineIntegrationService;
 import com.example.group7.Wsdl2Code.OnlineIntegrationService.addNewDebtResponsee;
 import com.example.group7.Wsdl2Code.OnlineIntegrationService.debtListResponse;
+import com.example.group7.Wsdl2Code.OnlineIntegrationService.payDebtResponsee;
 import com.example.group7.Wsdl2Code.OnlineIntegrationService.userLoginResponse;
 
 import com.example.group7.debtcheckapp.Mock.Account;
@@ -68,5 +69,23 @@ public class OnlineIntegrationServiceImplements implements OnlineIntegrationServ
             debtList.add(debt);
         }
         return debtList;
+    }
+
+    @Override
+    public ArrayList<Debt> getAllClaims(){
+        debtListResponse response = this.webService.getMyClaims(this.sessionId);
+        if(response.debtList == null){
+            return null;
+        }
+        ArrayList claimList = new ArrayList<Debt>();
+        for(int i = 0; i < response.debtList.size(); i++) {
+            Debt claim = new Debt(response.debtList.get(i).debtor, response.debtList.get(i).creditor, response.debtList.get(i).amount, response.debtList.get(i).reason);
+            claimList.add(claim);
+        }
+        return claimList;
+    }
+    @Override
+    public void payDebt(String creditor, BigDecimal amount, int id){
+        this.webService.payDebt(this.sessionId, creditor, amount.doubleValue(), id);
     }
 }

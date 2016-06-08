@@ -78,8 +78,8 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(this, DebtListActivity.class);
             startActivity(intent);
         }
-        else if (id == R.id.nav_addfriends) {
-            Intent intent = new Intent(this, FriendsSearchActivity.class);
+        else if (id == R.id.nav_claimList) {
+            Intent intent = new Intent(this, ClaimListActivity.class);
             startActivity(intent);
         }
         else if (id == R.id.nav_logout) {
@@ -99,13 +99,15 @@ public class MainActivity extends AppCompatActivity
         @Override
         protected Void doInBackground(Void... params)
         {
-            while (!isCancelled())
-            {
-                DebtCheckAndroidApplication app = (DebtCheckAndroidApplication) getApplication();
-                app.getOnlineIntegrationServiceInterface().logout();
-                CharSequence text = "Logout erfolgreich!";
-                Toast.makeText(getBaseContext(), text, Toast.LENGTH_SHORT).show();
-            }
+                try{
+                    DebtCheckAndroidApplication app = (DebtCheckAndroidApplication) getApplication();
+                    app.getOnlineIntegrationServiceInterface().logout();
+                    CharSequence text = "Logout erfolgreich!";
+                    Toast.makeText(getBaseContext(), text, Toast.LENGTH_SHORT).show();
+                }
+                catch(Exception e){
+                    e.printStackTrace();
+                }
             return null;
         }
     }

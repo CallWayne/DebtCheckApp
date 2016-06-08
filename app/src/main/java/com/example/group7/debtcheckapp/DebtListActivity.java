@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.group7.Wsdl2Code.OnlineIntegrationService.debt;
+import com.example.group7.Wsdl2Code.OnlineIntegrationService.payDebtResponsee;
 import com.example.group7.debtcheckapp.Exceptions.InvalidLoginException;
 import com.example.group7.debtcheckapp.Mock.Account;
 import com.example.group7.debtcheckapp.Mock.AccountList;
@@ -27,7 +28,7 @@ public class DebtListActivity extends AppCompatActivity {
 
     ArrayList<Debt> debtList = new ArrayList<>();
     ListView listView ;
-    Debt d;
+    Debt debt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +49,7 @@ public class DebtListActivity extends AppCompatActivity {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id){
-                d = (Debt) listView.getItemAtPosition(position);
+                debt = (Debt) listView.getItemAtPosition(position);
                 registerForContextMenu(listView);
                 openContextMenu(listView);
                 return true;
@@ -67,7 +68,11 @@ public class DebtListActivity extends AppCompatActivity {
     public boolean onContextItemSelected(MenuItem item){
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch(item.getItemId()){
-            case R.id.btn_payDebt: return true;
+            case R.id.btn_payDebt:
+                Intent intent = new Intent(getBaseContext(), PayDebtActivity.class);
+                intent.putExtra("debtIntent",debt);
+                startActivity(intent);
+                return true;
         }
         return true;
     }

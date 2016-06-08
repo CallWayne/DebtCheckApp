@@ -4,32 +4,29 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.example.group7.debtcheckapp.Mock.Account;
 import com.example.group7.debtcheckapp.Mock.Debt;
 
 import java.util.ArrayList;
 
-public class DebtAdapter extends BaseAdapter {
-
-    private ArrayList<Debt> debtList;
+public class ClaimAdapter extends BaseAdapter {
+    private ArrayList<Debt> claimList;
     private LayoutInflater layoutInflater;
 
-    public DebtAdapter(Context context, ArrayList<Debt> debts) {
-        this.debtList = debts;
+    public  ClaimAdapter(Context context, ArrayList<Debt> debts) {
+        this.claimList = debts;
         this.layoutInflater = LayoutInflater.from(context);
 
     }
 
     @Override
     public int getCount(){
-        if(debtList == null){
+        if(claimList == null){
             return 0;
         }
-        return debtList.size();
+        return claimList.size();
     }
 
     @Override
@@ -39,7 +36,7 @@ public class DebtAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position){
-        return debtList.get(position);
+        return claimList.get(position);
     }
 
     @Override
@@ -47,21 +44,20 @@ public class DebtAdapter extends BaseAdapter {
 
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
-            convertView = layoutInflater.inflate(R.layout.item_debt, null);
+            convertView = layoutInflater.inflate(R.layout.item_claim, null);
         }
         // Lookup view for data population
-        TextView tvDebt = (TextView) convertView.findViewById(R.id.Debt);
+        TextView tvClaim = (TextView) convertView.findViewById(R.id.Claim);
         // Populate the data into the template view using the data object
-        tvDebt.setText(String.valueOf(debtList.get(position).getAmount()));
+        tvClaim.setText(String.valueOf(claimList.get(position).getAmount()));
         // Return the completed view to render on screen
-        TextView tvCreditor = (TextView) convertView.findViewById(R.id.Creditor);
+        TextView tvDebtor = (TextView) convertView.findViewById(R.id.Debtor);
         // Populate the data into the template view using the data object
-        tvCreditor.setText(String.valueOf(debtList.get(position).getCreditor()));
+        tvDebtor.setText(String.valueOf(claimList.get(position).getDebtor()));
 
-        TextView tvReason = (TextView) convertView.findViewById(R.id.DebtReason);
+        TextView tvReason = (TextView) convertView.findViewById(R.id.ClaimReason);
         // Populate the data into the template view using the data object
-        tvReason.setText(String.valueOf(debtList.get(position).getReason()));
+        tvReason.setText(String.valueOf(claimList.get(position).getReason()));
         return convertView;
     }
 }
-

@@ -13,11 +13,16 @@ public interface OnlineIntegrationServiceInterface {
 
     public Account login(String email, String password) throws InvalidLoginException;
 
-    public void logout(); //throws NoSessionException;
+    public void logout();
 
     public Account signup(String username, String email, String password)throws InvalidLoginException;
 
     public Debt addNewDebt(String username, BigDecimal amount, String reason) throws InvalidAddNewDebtException;
 
     public ArrayList<Debt> getAllDebts();
+
+    public ArrayList<Debt> getAllClaims();
+
+    public void payDebt(String creditor, BigDecimal amount, int id);
+
 }

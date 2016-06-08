@@ -279,7 +279,7 @@ public class OnlineIntegrationService {
                     return resultVariable;
                 }
                     
-                }
+            }
 
         }catch (Exception e) {
             if (eventHandler != null)
@@ -359,13 +359,13 @@ public class OnlineIntegrationService {
         return null;
     }
     
-    public void payDebtAsync(int arg0,String arg1,double arg2,boolean arg2Specified,int arg3) throws Exception{
+    public void payDebtAsync(int arg0,String arg1,double arg2,int arg3) throws Exception{ //boolean arg2Specified
         if (this.eventHandler == null)
             throw new Exception("Async Methods Requires IWsdl2CodeEvents");
-        payDebtAsync(arg0, arg1, arg2, arg2Specified, arg3, null);
+        payDebtAsync(arg0, arg1, arg2, arg3, null);
     }
     
-    public void payDebtAsync(final int arg0,final String arg1,final double arg2,final boolean arg2Specified,final int arg3,final List<HeaderProperty> headers) throws Exception{
+    public void payDebtAsync(final int arg0,final String arg1,final double arg2,final int arg3,final List<HeaderProperty> headers) throws Exception{
         
         new AsyncTask<Void, Void, payDebtResponsee>(){
             @Override
@@ -374,7 +374,7 @@ public class OnlineIntegrationService {
             };
             @Override
             protected payDebtResponsee doInBackground(Void... params) {
-                return payDebt(arg0, arg1, arg2, arg2Specified, arg3, headers);
+                return payDebt(arg0, arg1, arg2, arg3, headers); //arg2Specified
             }
             @Override
             protected void onPostExecute(payDebtResponsee result)
@@ -387,11 +387,11 @@ public class OnlineIntegrationService {
         }.execute();
     }
     
-    public payDebtResponsee payDebt(int arg0,String arg1,double arg2,boolean arg2Specified,int arg3){
-        return payDebt(arg0, arg1, arg2, arg2Specified, arg3, null);
+    public payDebtResponsee payDebt(int arg0,String arg1,double arg2,int arg3){ //boolean arg2Specified
+        return payDebt(arg0, arg1, arg2, arg3, null);
     }
     
-    public payDebtResponsee payDebt(int arg0,String arg1,double arg2,boolean arg2Specified,int arg3,List<HeaderProperty> headers){
+    public payDebtResponsee payDebt(int arg0,String arg1,double arg2,int arg3,List<HeaderProperty> headers){ //boolean arg2Specified
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
         //soapEnvelope.dotNet = true;
@@ -401,7 +401,7 @@ public class OnlineIntegrationService {
         soapReq.addProperty("arg0",arg0);
         soapReq.addProperty("arg1",arg1);
         soapReq.addProperty("arg2",arg2);
-        soapReq.addProperty("arg2Specified",arg2Specified);
+        //soapReq.addProperty("arg2Specified",arg2Specified);
         soapReq.addProperty("arg3",arg3);
         soapEnvelope.setOutputSoapObject(soapReq);
         HttpTransportSE httpTransport = new HttpTransportSE(url,timeOut);
@@ -562,11 +562,23 @@ public class OnlineIntegrationService {
             }else{
                 SoapObject result=(SoapObject)retObj;
                 if (result.getPropertyCount() > 0){
+
                     Object obj = result.getProperty(0);
-                    SoapObject j = (SoapObject)obj;
-                    debtListResponse resultVariable =  new debtListResponse (j);
+                    //holt alle Daten vom Response
+                    SoapObject allData = (SoapObject)obj;
+                    debtListResponse resultVariable =  new debtListResponse (allData);
+                    //holt die Debts von allen Daten im Response
+                    for(int i=0; i < allData.getPropertyCount();i++){
+                        PropertyInfo pi = new PropertyInfo();
+                        allData.getPropertyInfo(i,pi);
+                        if(pi.name.equals("debtList")){
+                            SoapObject debts = (SoapObject)allData.getProperty(i);
+                            debtTO c = new debtTO(debts);
+                            resultVariable.debtList.add(c);
+                        }
+
+                    }
                     return resultVariable;
-                    
                 }
             }
         }catch (Exception e) {
