@@ -156,15 +156,17 @@ public class MainActivity extends AppCompatActivity
         @Override
         protected Void doInBackground(Void... params)
         {
-                try{
-                    DebtCheckAndroidApplication app = (DebtCheckAndroidApplication) getApplication();
-                    app.getOnlineIntegrationServiceInterface().logout();
-                    CharSequence text = "Logout erfolgreich!";
-                    Toast.makeText(getBaseContext(), text, Toast.LENGTH_SHORT).show();
-                }
-                catch(Exception e){
-                    e.printStackTrace();
-                }
+
+            try{
+                DebtCheckAndroidApplication app = (DebtCheckAndroidApplication) getApplication();
+                app.getOnlineIntegrationServiceInterface().logout();
+                CharSequence text = "Logout erfolgreich!";
+                Toast.makeText(getBaseContext(), text, Toast.LENGTH_SHORT).show();
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+
             return null;
         }
     }

@@ -45,6 +45,4 @@
             android:text="Reason"
             android:layout_column="0" />
     </TableRow>
-
-
 </TableLayout>

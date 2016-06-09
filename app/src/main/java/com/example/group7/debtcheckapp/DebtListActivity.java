@@ -70,7 +70,7 @@ public class DebtListActivity extends AppCompatActivity {
         switch(item.getItemId()){
             case R.id.btn_payDebt:
                 Intent intent = new Intent(getBaseContext(), PayDebtActivity.class);
-                intent.putExtra("debtIntent",debt);
+                intent.putExtra("debtIntent", debt);
                 startActivity(intent);
                 return true;
         }
