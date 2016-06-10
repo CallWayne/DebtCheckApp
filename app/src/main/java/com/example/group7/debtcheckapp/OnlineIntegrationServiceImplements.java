@@ -66,6 +66,7 @@ public class OnlineIntegrationServiceImplements implements OnlineIntegrationServ
         ArrayList debtList = new ArrayList<Debt>();
         for(int i = 0; i < response.debtList.size(); i++) {
             Debt debt = new Debt(response.debtList.get(i).debtor, response.debtList.get(i).creditor, response.debtList.get(i).amount, response.debtList.get(i).reason);
+            debt.setId(response.debtList.get(i).id);
             debtList.add(debt);
         }
         return debtList;

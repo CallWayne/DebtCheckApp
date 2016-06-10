@@ -61,6 +61,7 @@ public class DebtAdapter extends BaseAdapter {
         TextView tvReason = (TextView) convertView.findViewById(R.id.DebtReason);
         // Populate the data into the template view using the data object
         tvReason.setText(String.valueOf(debtList.get(position).getReason()));
+
         return convertView;
     }
 }
