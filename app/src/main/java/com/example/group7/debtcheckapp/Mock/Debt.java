@@ -45,17 +45,18 @@ public class Debt implements Serializable {
         return id;
     }
 
-<<<<<<< HEAD
     /**
-     * GET-Methode für Amount
-     * @return double
+     * SET-Methode für die ID
+     * @param id int
      */
-=======
     public void setId(int id) {
         this.id = id;
     }
 
->>>>>>> origin/master
+    /**
+     * GET-Methode für Amount
+     * @return double
+     */
     public double getAmount() {
         return amount;
     }
