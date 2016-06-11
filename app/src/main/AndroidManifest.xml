@@ -41,12 +41,8 @@
             android:name=".DebtListActivity"
             android:label="Debt List" />
         <activity
-            android:name=".FriendsActivity"
-            android:label="Friend" />
-        <activity
             android:name=".DebtActivity"
             android:label="Debt" />
-        <activity android:name=".FriendsSearchActivity" />
         <activity android:name=".ProfileActivity" />
         <activity
             android:name=".PayDebtActivity"

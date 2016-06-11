@@ -1,5 +1,9 @@
 package com.example.group7.debtcheckapp;
 
+/**
+ * Activity für das Anlegen neuer Schulden
+ */
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -10,21 +14,20 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
-
 import com.example.group7.debtcheckapp.Exceptions.InvalidAddNewDebtException;
-import com.example.group7.debtcheckapp.Mock.AccountList;
 import com.example.group7.debtcheckapp.Mock.Debt;
-
 import java.math.BigDecimal;
-
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
+/**
+ * @author Niklas Schlüter, André Käthner
+ * @version 1.0
+ */
 public class DebtActivity extends AppCompatActivity {
+
     private static final String TAG = "DebtActivity";
-    private OnlineIntegrationServiceImplements oisi;
 
     @InjectView(R.id.edit_debt) EditText _editDebtText;
     @InjectView(R.id.edit_debtor) EditText _editDebtorText; //war vorher ein Spinner
@@ -32,22 +35,22 @@ public class DebtActivity extends AppCompatActivity {
     @InjectView(R.id.edit_date) EditText _editDateText;
     @InjectView(R.id.button_createNewDebt) Button _createdNewDebtButton;
 
+    /**
+     * Methode für das erstellen der Activity
+     * @param savedInstanceState Bundle
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_debt);
         ButterKnife.inject(this);
-
-        /*Spinner spinner = (Spinner) findViewById(R.id.edit_debtor);
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        DebtAdapter adapter = new DebtAdapter(this, AccountList.getAccList());
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        spinner.setAdapter(adapter);*/
-
+        //Initialisierung des Button
         _createdNewDebtButton.setOnClickListener(new View.OnClickListener() {
 
+            /**
+             * Methode für das Klicken des Button
+             * @param v View
+             */
             @Override
             public void onClick(View v) {
                 addNewDebt(v);
@@ -55,13 +58,14 @@ public class DebtActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Methode für das erstellen einer Schuld
+     * @param btnAddNewDebt View
+     */
     public void addNewDebt(View btnAddNewDebt) {
         Log.d(TAG, "Add a new Debt");
-
         _createdNewDebtButton.setEnabled(false);
-
-        final ProgressDialog  progressDialog = new ProgressDialog(DebtActivity.this,
-                R.style.AppTheme_Dark_Dialog);
+        final ProgressDialog  progressDialog = new ProgressDialog(DebtActivity.this, R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Erstellt eine neue Schuld...");
         progressDialog.show();
@@ -71,33 +75,46 @@ public class DebtActivity extends AppCompatActivity {
         String reason = _editReasonText.getText().toString();
         String endDate = _editDateText.getText().toString();
 
+        //Initialsierung und Start des AsyncTask
         AddNewDebtTask addNewDebtTask = new AddNewDebtTask(btnAddNewDebt.getContext());
         addNewDebtTask.execute(debtor, amount, reason);
     }
 
+    /**
+     * AsyncTask für das erstellen einer Schuld
+     */
     private class AddNewDebtTask extends AsyncTask<String, Integer, Debt> {
 
         private Context context;
 
+        /**
+         * Konstruktor
+         * @param context Context
+         */
         public AddNewDebtTask(Context context)
         {
             this.context = context;
         }
 
+        /**
+         * Methode das abholen der Daten vom Server
+         * @return Debt
+         */
         @Override
         protected Debt doInBackground(String... params) {
             if(params.length != 3) {
                 return null;
             }
-
+            //Übergebene Parameter holen
             String debtor = params[0];
             String amount = params[1];
             String reason = params[2];
             DebtCheckAndroidApplication app = (DebtCheckAndroidApplication) getApplication();
-
+            //String in BigDecimal ändern
             BigDecimal amountBd = new BigDecimal(amount);
 
             try {
+                //Methode im WebService aufrufen
                 Debt userDebt = app.getOnlineIntegrationServiceInterface().addNewDebt(debtor, amountBd, reason);
                 return userDebt;
             }
@@ -107,26 +124,28 @@ public class DebtActivity extends AppCompatActivity {
             return null;
         }
 
+        /**
+         * Methode für das setzen der Schuld
+         * @param result Debt
+         */
         protected void onPostExecute(Debt result)
         {
             if(result != null)
             {
-                //erfolgreich eingeloggt
+                //setDebt Methode ausführen
                 DebtCheckAndroidApplication app = (DebtCheckAndroidApplication) getApplication();
                 app.setDebt(result);
-
-                //Toast anzeigen
+                //Toast erstellen und anzeigen
                 CharSequence text = "Erstellen einer neuen Schuld erfolgreich! Die Höhe der Schuld beträgt " + result.getAmount();
                 Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
-
-                //Nächste Activity anzeigen
                 _createdNewDebtButton.setEnabled(true);
+                //nächste Activity anzeigen
                 Intent intent = new Intent(context, MainActivity.class);
                 startActivity(intent);
             }
             else
             {
-                //Toast anzeigen
+                //Toast erstellen und anzeigen
                 CharSequence text = "Erstellen einer neuen Schuld fehlgeschlagen!";
                 Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
             }

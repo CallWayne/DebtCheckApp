@@ -1,5 +1,9 @@
 package com.example.group7.debtcheckapp;
 
+/**
+ * MainActivity, Startbildschirm nach Login/Signup
+ */
+
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,19 +16,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.group7.debtcheckapp.Mock.Debt;
-
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
-
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-
+/**
+ * @author Niklas Schlüter, André Käthner
+ * @version 1.0
+ */
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -34,7 +37,10 @@ public class MainActivity extends AppCompatActivity
     ArrayList<Debt> debtList;
     ArrayList<Debt> claimList;
 
-
+    /**
+     * Methode für das erstellen der Activity
+     * @param savedInstanceState Bundle
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
