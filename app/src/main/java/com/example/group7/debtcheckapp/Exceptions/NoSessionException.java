@@ -10,7 +10,6 @@ public class NoSessionException extends Exception {
     /**
      * Konstruktor
      * @param message String
-     * @return NoSessionException
      */
     public NoSessionException(String message) {
         super(message);
@@ -20,7 +19,6 @@ public class NoSessionException extends Exception {
      * Konstruktor
      * @param message String
      * @param throwable Throwable
-     * @return NoSessionException
      */
     public NoSessionException(String message, Throwable throwable) {
         super(message, throwable);

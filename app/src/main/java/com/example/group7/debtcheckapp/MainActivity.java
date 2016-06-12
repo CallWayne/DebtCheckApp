@@ -1,7 +1,7 @@
 package com.example.group7.debtcheckapp;
 
 /**
- * MainActivity, Startbildschirm nach Login/Signup
+ * MainActivity, Startbildschirm
  */
 
 import android.content.Intent;

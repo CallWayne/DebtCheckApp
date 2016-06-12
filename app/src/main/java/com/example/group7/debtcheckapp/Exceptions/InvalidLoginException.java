@@ -10,7 +10,6 @@ public class InvalidLoginException extends Exception {
     /**
      * Konstruktor
      * @param message String
-     * @return InvalidLoginException
      */
     public InvalidLoginException(String message) {
         super(message);
@@ -20,7 +19,6 @@ public class InvalidLoginException extends Exception {
      * Konstruktor
      * @param message String
      * @param throwable Throwable
-     * @return InvalidLoginException
      */
     public InvalidLoginException(String message, Throwable throwable) {
         super(message, throwable);
