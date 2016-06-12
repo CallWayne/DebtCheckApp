@@ -18,6 +18,7 @@
             android:layout_height="match_parent">
 
             <TextView
+                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView_debt"
@@ -35,7 +36,7 @@
                 android:inputType="numberDecimal"
                 android:ems="10"
                 android:id="@+id/edit_payment"
-                android:text="Wieviel soll zurück gezahlt werden?"
+                android:hint="Wieviel soll zurückgezahlt werden?"
                 android:layout_column="0"
                 android:layout_weight="1" />
 
