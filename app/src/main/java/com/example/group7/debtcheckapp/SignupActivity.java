@@ -19,6 +19,7 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.example.group7.debtcheckapp.Exceptions.InvalidLoginException;
+import com.example.group7.debtcheckapp.Exceptions.InvalidSignupException;
 import com.example.group7.debtcheckapp.Mock.Account;
 
 /**
@@ -87,7 +88,7 @@ public class SignupActivity extends AppCompatActivity {
         final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this,
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Creating Account...");
+        progressDialog.setMessage("Account wird erstellt...");
         progressDialog.show();
         //EingabeWerte aus den jeweiligen Feldern holen
         String username = _nameText.getText().toString();
@@ -103,7 +104,7 @@ public class SignupActivity extends AppCompatActivity {
      */
     public void onSignupFailed() {
         //Toast initialisieren und anzeigen
-        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), "Login fehlgeschlagen", Toast.LENGTH_LONG).show();
         _signupButton.setEnabled(true);
     }
 
@@ -119,21 +120,21 @@ public class SignupActivity extends AppCompatActivity {
         String password = _passwordText.getText().toString();
         //prüfen ob der Benutzername valide ist
         if (name.isEmpty() || name.length() < 3) {
-            _nameText.setError("at least 3 characters");
+            _nameText.setError("Der Name muss mindestens aus 3 Buchstaben bestehen!");
             valid = false;
         } else {
             _nameText.setError(null);
         }
         //prüfen ob die Email valide ist
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            _emailText.setError("enter a valid email address");
+            _emailText.setError("Geben Sie eine gültige Email-Adresse ein!");
             valid = false;
         } else {
             _emailText.setError(null);
         }
         //prüfen ob das Password valide ist
         if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            _passwordText.setError("between 4 and 10 alphanumeric characters");
+            _passwordText.setError("Das Passwort muss zwischen 4 und 10 Zeichen haben und alphanummerisch sein!");
             valid = false;
         } else {
             _passwordText.setError(null);
@@ -172,10 +173,10 @@ public class SignupActivity extends AppCompatActivity {
             DebtCheckAndroidApplication app = (DebtCheckAndroidApplication) getApplication();
             try {
                 //Methode aus dem Interface aufrufen
-                Account userAccount = app.getOnlineIntegrationServiceInterface().signup(username, email, password);
-                return userAccount;
+                Account result = app.getOnlineIntegrationServiceInterface().signup(username, email, password);
+                return result;
             }
-            catch (InvalidLoginException e) {
+            catch (InvalidSignupException e) {
                 e.printStackTrace();
             }
             return null;
@@ -192,8 +193,9 @@ public class SignupActivity extends AppCompatActivity {
                 //erfolgreich registriert
                 DebtCheckAndroidApplication app = (DebtCheckAndroidApplication) getApplication();
                 app.setAccount(result);
+
                 //Toast anzeigen
-                CharSequence text = "Registration erfolgreich! Angemeldet als " + result.getUserName();
+                CharSequence text = "Registration erfolgreich!";
                 Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
                 //Nächste Activity anzeigen
                 _signupButton.setEnabled(true);

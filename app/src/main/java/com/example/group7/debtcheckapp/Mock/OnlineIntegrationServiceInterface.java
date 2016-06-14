@@ -6,6 +6,7 @@ package com.example.group7.debtcheckapp.Mock;
 
 import com.example.group7.debtcheckapp.Exceptions.InvalidAddNewDebtException;
 import com.example.group7.debtcheckapp.Exceptions.InvalidLoginException;
+import com.example.group7.debtcheckapp.Exceptions.InvalidSignupException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
@@ -37,7 +38,7 @@ public interface OnlineIntegrationServiceInterface {
      * @return Account
      * @exception InvalidLoginException
      */
-    public Account signup(String username, String email, String password)throws InvalidLoginException;
+    public Account signup(String username, String email, String password)throws InvalidSignupException;
 
     /**
      * Methode für das adden einer neuen Schuld

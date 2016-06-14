@@ -24,7 +24,6 @@ public class Account implements Serializable {
     private String email;
     private String password;
     private HashMap<Integer,Debt> debts;
-    private HashMap<Integer,Claim> claims;
     private ArrayList<Account> friendlist;
 
     /**
@@ -39,7 +38,6 @@ public class Account implements Serializable {
         this.email = email;
         this.password = password;
         this.debts = new HashMap<>();
-        this.claims = new HashMap<>();
         this.friendlist = new ArrayList<>();
     }
     /**
@@ -48,14 +46,6 @@ public class Account implements Serializable {
      */
     public void addNewDebt(Debt newDebt) {
         this.debts.put(newDebt.getId(), newDebt);
-    }
-
-    /**
-     * Methode für das Hinzufügen einer neuen Forderung
-     * @param newClaim Claim
-     */
-    public void addNewClaim(Claim newClaim) {
-        this.claims.put(newClaim.getId(), newClaim);
     }
 
     /**
@@ -97,23 +87,6 @@ public class Account implements Serializable {
      */
     public List<Debt> getDebts() {
         return new ArrayList<Debt>(debts.values());
-    }
-
-    /**
-     * GET-Methode für eine bestimmte Forderung
-     * @param ClaimId int
-     * @return Claim
-     */
-    public Claim getClaimById(int ClaimId) {
-        return claims.get(ClaimId);
-    }
-
-    /**
-     * GET-Methode für alle Forderungen
-     * @return List
-     */
-    public List<Claim> getClaim() {
-        return new ArrayList<Claim>(claims.values());
     }
 
     /**

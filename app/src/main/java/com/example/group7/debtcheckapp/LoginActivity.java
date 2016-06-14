@@ -90,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
         //ProgressDialog wird erstellt und gestartet
         final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this, R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Authenticating...");
+        progressDialog.setMessage("Authentifizierung erfolgt...");
         progressDialog.show();
 
         //Werte werden gelesen email und password
@@ -124,14 +124,14 @@ public class LoginActivity extends AppCompatActivity {
 
         //Emailprüfung
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            _emailText.setError("enter a valid email address");
+            _emailText.setError("Geben Sie eine gültige Email-Adresse ein!");
             valid = false;
         } else {
             _emailText.setError(null);
         }
         //Passwordprüfung
         if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            _passwordText.setError("between 4 and 10 alphanumeric characters");
+            _passwordText.setError("Das Passwort muss zwischen 4 und 10 Zeichen haben und alphanummerisch sein!");
             valid = false;
         } else {
             _passwordText.setError(null);
@@ -193,7 +193,7 @@ public class LoginActivity extends AppCompatActivity {
                 DebtCheckAndroidApplication app = (DebtCheckAndroidApplication) getApplication();
                 app.setAccount(result);
                 //Toast anzeigen
-                CharSequence text = "Login erfolgreich! Angemeldet als " + result.getUserName();
+                CharSequence text = "Login erfolgreich!";
                 Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
                 //Nächste Activity anzeigen
                 _loginButton.setEnabled(true);
