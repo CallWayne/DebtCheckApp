@@ -80,77 +80,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Wann soll zurück gezahlt werden?"
-            android:id="@+id/date"
-            android:layout_column="0"
-            android:layout_weight="1" />
-
-        <EditText
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:inputType="date"
-            android:ems="10"
-            android:id="@+id/edit_date"
-            android:layout_column="1"
-            android:layout_weight="1" />
-
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Zinsen?"
-            android:id="@+id/interests"
-            android:layout_column="0"
-            android:layout_weight="1" />
-
-        <Switch
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/switch_interests"
-            android:layout_column="1"
-            android:checked="false"
-            android:layout_weight="1" />
-
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Soll erinnert werden?"
-            android:id="@+id/notification"
-            android:layout_column="0"
-            android:layout_weight="1" />
-
-        <Switch
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/switch_notification"
-            android:layout_column="1"
-            android:checked="false"
-            android:layout_weight="1" />
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Create new Debt!"
-            android:id="@+id/button_createNewDebt"
+            android:id="@+id/btn_createNewDebt"
             android:layout_column="0"
             android:layout_weight="1"/>
     </TableRow>

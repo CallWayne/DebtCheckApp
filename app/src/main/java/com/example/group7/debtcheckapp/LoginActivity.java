@@ -6,7 +6,11 @@ package com.example.group7.debtcheckapp;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.media.audiofx.BassBoost;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.content.Intent;
@@ -41,6 +45,8 @@ public class LoginActivity extends AppCompatActivity {
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.inject(this);
@@ -79,6 +85,7 @@ public class LoginActivity extends AppCompatActivity {
      */
     public void login(View btnLogin ) {
         Log.d(TAG, "Login");
+
         //Eingabewerte werden mit validate() geprüft
         if (!validate()) {
             //wenn Werte falsch dann wird die Methode onLoginFailed() aufgerufen
@@ -97,15 +104,29 @@ public class LoginActivity extends AppCompatActivity {
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
 
-        //Initialisierung und Aufruf des AsyncTask loginTask
-        LoginTask loginTask = new LoginTask(btnLogin.getContext());
-        loginTask.execute(email, password);
+        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+
+        if(networkInfo != null && networkInfo.isConnected()) {
+
+            //Initialisierung und Aufruf des AsyncTask loginTask
+            LoginTask loginTask = new LoginTask(btnLogin.getContext());
+            loginTask.execute(email, password);
+        }
+        else{
+
+            //Bei Fehler einen Toast anzeigen
+            CharSequence text = "Keine Netzwerkverbindung";
+            Toast.makeText(getBaseContext(), text, Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
      * Methode für das fehlschlagen der Loginfunktion
      */
     private void onLoginFailed() {
+        Log.d(TAG, "onLoginFailed");
+
         //Toast initialsieren und anzeigen
         CharSequence text = "Login fehlgeschlagen!";
         Toast.makeText(getBaseContext(), text, Toast.LENGTH_LONG).show();
@@ -117,6 +138,8 @@ public class LoginActivity extends AppCompatActivity {
      * @return boolean
      */
     public boolean validate() {
+        Log.d(TAG, "validate");
+
         boolean valid = true;
         //Werte einlesen email und password
         String email = _emailText.getText().toString();
@@ -161,6 +184,8 @@ public class LoginActivity extends AppCompatActivity {
          */
         @Override
         protected Account doInBackground(String... params) {
+            Log.d(TAG, "doInBackground");
+
             if(params.length != 2) {
                 return null;
             }
@@ -185,8 +210,9 @@ public class LoginActivity extends AppCompatActivity {
          * Methode für das Login
          * @param result Account
          */
-        protected void onPostExecute(Account result)
-        {
+        protected void onPostExecute(Account result) {
+            Log.d(TAG, "onPostExecute");
+
             if(result != null)
             {
                 //erfolgreich eingeloggt

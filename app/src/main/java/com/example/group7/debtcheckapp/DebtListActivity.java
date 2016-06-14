@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,6 +24,7 @@ import java.util.concurrent.ExecutionException;
  * @version 1.0
  */
 public class DebtListActivity extends AppCompatActivity {
+    private static final String TAG = "DebtListActivity";
 
     ArrayList<Debt> debtList = new ArrayList<>();
     ListView listView ;
@@ -34,6 +36,8 @@ public class DebtListActivity extends AppCompatActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_debts_list);
         DebtListTask debtListTask = new DebtListTask();
@@ -77,6 +81,8 @@ public class DebtListActivity extends AppCompatActivity {
      */
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo info){
+        Log.d(TAG, "onCreateContextMenu");
+
         super.onCreateContextMenu(menu, v, info);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_debtlist, menu);
@@ -89,6 +95,8 @@ public class DebtListActivity extends AppCompatActivity {
      */
     @Override
     public boolean onContextItemSelected(MenuItem item){
+        Log.d(TAG, "onContextItemSelected");
+
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch(item.getItemId()){
             case R.id.btn_payDebt:
@@ -109,6 +117,7 @@ public class DebtListActivity extends AppCompatActivity {
     private class DebtListTask extends AsyncTask<Void, Void, ArrayList<Debt>> {
         @Override
         protected ArrayList<Debt> doInBackground(Void... params) {
+            Log.d(TAG, "doInBackground");
             DebtCheckAndroidApplication app = (DebtCheckAndroidApplication) getApplication();
             ArrayList<Debt> debtList = app.getOnlineIntegrationServiceInterface().getAllDebts();
             return debtList;

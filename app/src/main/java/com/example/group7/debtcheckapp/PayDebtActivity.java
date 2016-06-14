@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,7 +25,7 @@ import butterknife.InjectView;
  * @version 1.0
  */
 public class PayDebtActivity extends AppCompatActivity {
-
+    private static final String TAG = "PayDebtActivity";
     @InjectView(R.id.edit_payment) EditText _edit_paymentText;
     @InjectView(R.id.btn_payDebt) Button _btn_payDebtButton;
     @InjectView(R.id.textView_debt) TextView _text_debt;
@@ -36,6 +37,8 @@ public class PayDebtActivity extends AppCompatActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pay_debt);
         ButterKnife.inject(this);
@@ -65,6 +68,8 @@ public class PayDebtActivity extends AppCompatActivity {
      * @param view View
      */
     private void payDebt(View view) {
+        Log.d(TAG, "payDebt");
+
         double debtAmount = debt.getAmount();
         String amount = _edit_paymentText.getText().toString();
         double amountDbl = Double.parseDouble(amount);
@@ -104,6 +109,8 @@ public class PayDebtActivity extends AppCompatActivity {
          */
         @Override
         protected Void doInBackground(String... params) {
+            Log.d(TAG, "doInBackground");
+
             try {
                 //Initialisierung der Parameter
                 String amount = params[0];

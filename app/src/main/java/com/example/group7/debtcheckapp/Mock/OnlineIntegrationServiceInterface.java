@@ -36,7 +36,7 @@ public interface OnlineIntegrationServiceInterface {
      * @param email String
      * @param password String
      * @return Account
-     * @exception InvalidLoginException
+     * @exception InvalidSignupException
      */
     public Account signup(String username, String email, String password)throws InvalidSignupException;
 

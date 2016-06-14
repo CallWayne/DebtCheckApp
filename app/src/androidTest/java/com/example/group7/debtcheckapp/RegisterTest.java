@@ -5,13 +5,15 @@ import android.widget.Button;
 import android.widget.EditText;
 
 /**
- * Created by niklasschluter on 08.06.16.
+ * @author Niklas Schlüter, André Käthner
+ * @serial Account
+ * @version 1.0
  */
 public class RegisterTest extends ActivityInstrumentationTestCase2<SignupActivity> {
     private EditText benutzername;
     private EditText email;
     private EditText password;
-    private Button loginButton;
+    private Button signupButton;
     private SignupActivity nSignupActivity;
 
     public RegisterTest() {
@@ -22,12 +24,12 @@ public class RegisterTest extends ActivityInstrumentationTestCase2<SignupActivit
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        setActivityInitialTouchMode(true);
+
         nSignupActivity = getActivity();
         benutzername = (EditText) nSignupActivity.findViewById(R.id.input_name);
         email = (EditText) nSignupActivity.findViewById(R.id.input_email);
         password = (EditText) nSignupActivity.findViewById(R.id.input_password);
-        loginButton = (Button) nSignupActivity.findViewById(R.id.btn_signup);
+        signupButton = (Button) nSignupActivity.findViewById(R.id.btn_signup);
     }
     //Testen ob Eingabe != null ist
     public void testPreconditions() {
@@ -40,7 +42,7 @@ public class RegisterTest extends ActivityInstrumentationTestCase2<SignupActivit
 
             @Override
             public void run() {
-                assertTrue(loginButton.performClick());
+                assertTrue(signupButton.performClick());
 
             }
         });

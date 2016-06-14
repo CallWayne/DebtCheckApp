@@ -5,6 +5,11 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
 import android.widget.EditText;
 
+/**
+ * @author Niklas Schlüter, André Käthner
+ * @serial Account
+ * @version 1.0
+ */
 public class LoginTest extends ActivityInstrumentationTestCase2<LoginActivity> {
     private EditText email;
     private EditText password;

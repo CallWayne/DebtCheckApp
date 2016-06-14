@@ -30,10 +30,9 @@ public class DebtActivity extends AppCompatActivity {
     private static final String TAG = "DebtActivity";
 
     @InjectView(R.id.edit_debt) EditText _editDebtText;
-    @InjectView(R.id.edit_debtor) EditText _editDebtorText; //war vorher ein Spinner
+    @InjectView(R.id.edit_debtor) EditText _editDebtorText;
     @InjectView(R.id.edit_reason) EditText _editReasonText;
-    @InjectView(R.id.edit_date) EditText _editDateText;
-    @InjectView(R.id.button_createNewDebt) Button _createdNewDebtButton;
+    @InjectView(R.id.btn_createNewDebt) Button _createdNewDebtButton;
 
     /**
      * Methode für das erstellen der Activity
@@ -41,6 +40,8 @@ public class DebtActivity extends AppCompatActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_debt);
         ButterKnife.inject(this);
@@ -63,7 +64,8 @@ public class DebtActivity extends AppCompatActivity {
      * @param btnAddNewDebt View
      */
     public void addNewDebt(View btnAddNewDebt) {
-        Log.d(TAG, "Add a new Debt");
+        Log.d(TAG, "addNewDebt");
+
         _createdNewDebtButton.setEnabled(false);
         final ProgressDialog  progressDialog = new ProgressDialog(DebtActivity.this, R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
@@ -73,7 +75,6 @@ public class DebtActivity extends AppCompatActivity {
         String debtor = _editDebtorText.getText().toString();
         String amount = _editDebtText.getText().toString();
         String reason = _editReasonText.getText().toString();
-        String endDate = _editDateText.getText().toString();
 
         //Initialsierung und Start des AsyncTask
         AddNewDebtTask addNewDebtTask = new AddNewDebtTask(btnAddNewDebt.getContext());
@@ -102,6 +103,8 @@ public class DebtActivity extends AppCompatActivity {
          */
         @Override
         protected Debt doInBackground(String... params) {
+            Log.d(TAG, "doInBackground");
+
             if(params.length != 3) {
                 return null;
             }
@@ -128,8 +131,9 @@ public class DebtActivity extends AppCompatActivity {
          * Methode für das setzen der Schuld
          * @param result Debt
          */
-        protected void onPostExecute(Debt result)
-        {
+        protected void onPostExecute(Debt result) {
+            Log.d(TAG, "onPostExecute");
+
             if(result != null)
             {
                 //setDebt Methode ausführen

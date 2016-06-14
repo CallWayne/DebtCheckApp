@@ -13,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -28,9 +29,8 @@ import butterknife.InjectView;
  * @author Niklas Schlüter, André Käthner
  * @version 1.0
  */
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
-
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    private static final String TAG = "MainActivity";
     @InjectView(R.id.text_allDebts) TextView _text_allDebts;
     @InjectView(R.id.text_allClaims) TextView _text_allClaims;
 
@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -69,7 +71,9 @@ public class MainActivity extends AppCompatActivity
         setText();
     }
 
-    public void setText(){
+    public void setText() {
+        Log.d(TAG, "setText");
+
         DebtListTask debtListTask = new DebtListTask();
         try {
             debtList = debtListTask.execute().get();
@@ -107,13 +111,10 @@ public class MainActivity extends AppCompatActivity
         _text_allClaims.setText(String.valueOf(allClaims));
     }
 
-    public void newDebt(){
-        Intent intent = new Intent(this, DebtActivity.class);
-        startActivity(intent);
-    }
-
     @Override
     public void onBackPressed() {
+        Log.d(TAG, "onBackPressed");
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -125,6 +126,8 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        Log.d(TAG, "onNavigationItemSelected");
+
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
@@ -160,8 +163,8 @@ public class MainActivity extends AppCompatActivity
     public class LogoutTask extends AsyncTask<Void, Void, Void>
     {
         @Override
-        protected Void doInBackground(Void... params)
-        {
+        protected Void doInBackground(Void... params) {
+            Log.d(TAG, "doInBackground LogoutTask");
 
             try{
                 DebtCheckAndroidApplication app = (DebtCheckAndroidApplication) getApplication();
@@ -181,6 +184,8 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         protected ArrayList<Debt> doInBackground(Void... params) {
+            Log.d(TAG, "doInBackground DebtListTask");
+
             DebtCheckAndroidApplication app = (DebtCheckAndroidApplication) getApplication();
             ArrayList<Debt> debtList = app.getOnlineIntegrationServiceInterface().getAllDebts();
             return debtList;
@@ -191,6 +196,8 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         protected ArrayList<Debt> doInBackground(Void... params) {
+            Log.d(TAG, "doInBackground ClaimListTask");
+
             DebtCheckAndroidApplication app = (DebtCheckAndroidApplication) getApplication();
             ArrayList<Debt> claimList = app.getOnlineIntegrationServiceInterface().getAllClaims();
             return claimList;

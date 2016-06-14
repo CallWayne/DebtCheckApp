@@ -7,6 +7,7 @@ package com.example.group7.debtcheckapp;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 import com.example.group7.debtcheckapp.Mock.Debt;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import java.util.concurrent.ExecutionException;
  * @version 1.0
  */
 public class ClaimListActivity extends AppCompatActivity {
+    private static final String TAG = "ClaimListActivity";
 
     ArrayList<Debt> claimList = new ArrayList<>();
     ListView listView ;
@@ -27,6 +29,8 @@ public class ClaimListActivity extends AppCompatActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_claim_list);
         ClaimListTask claimListTask = new ClaimListTask();
@@ -49,6 +53,8 @@ public class ClaimListActivity extends AppCompatActivity {
     private class ClaimListTask extends AsyncTask<Void, Void, ArrayList<Debt>> {
         @Override
         protected ArrayList<Debt> doInBackground(Void... params) {
+            Log.d(TAG, "doInBackground");
+
             DebtCheckAndroidApplication app = (DebtCheckAndroidApplication) getApplication();
             ArrayList<Debt> claimList = app.getOnlineIntegrationServiceInterface().getAllClaims();
             return claimList;

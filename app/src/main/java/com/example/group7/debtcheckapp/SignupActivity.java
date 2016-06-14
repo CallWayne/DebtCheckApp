@@ -7,6 +7,8 @@ package com.example.group7.debtcheckapp;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -40,6 +42,7 @@ public class SignupActivity extends AppCompatActivity {
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         ButterKnife.inject(this);
@@ -75,7 +78,7 @@ public class SignupActivity extends AppCompatActivity {
      * @param btnSignup View
      */
     public void signup(View btnSignup) {
-        Log.d(TAG, "Signup");
+        Log.d(TAG, "signup");
         //prüfen ob die Eingabe Werte richtig sind
         if (!validate()) {
             //wenn falsch, dann Methode onSignupFailed() aufrufen
@@ -94,15 +97,31 @@ public class SignupActivity extends AppCompatActivity {
         String username = _nameText.getText().toString();
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
-        //AsyncTask intialisieren und ausführen
-        SignupTask signupTask = new SignupTask(btnSignup.getContext());
-        signupTask.execute(username, email, password);
+
+        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+
+        if(networkInfo != null && networkInfo.isConnected()){
+
+            //AsyncTask intialisieren und ausführen
+            SignupTask signupTask = new SignupTask(btnSignup.getContext());
+            signupTask.execute(username, email, password);
+        }
+        else{
+
+            //Bei Fehler einen Toast anzeigen
+            CharSequence text = "Keine Netzwerkverbindung";
+            Toast.makeText(getBaseContext(), text, Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     /**
      * Methode wenn das Registrieren fehlschlägt
      */
     public void onSignupFailed() {
+        Log.d(TAG, "onSignupFailed");
+
         //Toast initialisieren und anzeigen
         Toast.makeText(getBaseContext(), "Login fehlgeschlagen", Toast.LENGTH_LONG).show();
         _signupButton.setEnabled(true);
@@ -113,6 +132,8 @@ public class SignupActivity extends AppCompatActivity {
      * @return boolean
      */
     public boolean validate() {
+        Log.d(TAG, "validate");
+
         boolean valid = true;
         //Eingabwerte einlesen
         String name = _nameText.getText().toString();
@@ -163,6 +184,8 @@ public class SignupActivity extends AppCompatActivity {
          */
         @Override
         protected Account doInBackground(String... params) {
+            Log.d(TAG, "doInBackground");
+
             if(params.length != 3) {
                 return null;
             }
@@ -186,8 +209,9 @@ public class SignupActivity extends AppCompatActivity {
          * Methode für das Registrieren
          * @param result Account
          */
-        protected void onPostExecute(Account result)
-        {
+        protected void onPostExecute(Account result) {
+            Log.d(TAG, "onPostExecute");
+
             if(result != null)
             {
                 //erfolgreich registriert

@@ -4,6 +4,7 @@ package com.example.group7.debtcheckapp;
  * Klasse für die Methoden des OnlineIntegrationService
  */
 
+
 import com.example.group7.Wsdl2Code.OnlineIntegrationService.OnlineIntegrationService;
 import com.example.group7.Wsdl2Code.OnlineIntegrationService.addNewDebtResponsee;
 import com.example.group7.Wsdl2Code.OnlineIntegrationService.debtListResponse;
@@ -21,7 +22,6 @@ import java.util.ArrayList;
  * @version 1.0
  */
 public class OnlineIntegrationServiceImplements implements OnlineIntegrationServiceInterface {
-
     private OnlineIntegrationService webService;
     private int sessionId;
 
