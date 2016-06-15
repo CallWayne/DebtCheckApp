@@ -98,8 +98,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Debt x = debtList.get(i);
                 allDebts = allDebts + x.getAmount();
             }
+            _text_allDebts.setText(String.valueOf(allDebts));
         }
-        _text_allDebts.setText(String.valueOf(allDebts));
+        else{
+            _text_allDebts.setText("Keine Schuld vorhanden!");
+        }
+
 
         double allClaims=0;
         if(claimList!=null){
@@ -107,8 +111,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Debt x = claimList.get(i);
                 allClaims = allClaims + x.getAmount();
             }
+            _text_allClaims.setText(String.valueOf(allClaims));
         }
-        _text_allClaims.setText(String.valueOf(allClaims));
+        else{
+            _text_allClaims.setText("Keine Forderung vorhanden!");
+        }
     }
 
     @Override
