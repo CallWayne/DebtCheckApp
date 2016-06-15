@@ -1,53 +1,49 @@
 package com.example.group7.debtcheckapp;
 
+import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
 import android.widget.EditText;
+
+import android.content.Context;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.rule.ActivityTestRule;
+import android.support.test.runner.AndroidJUnit4;
+
+import org.junit.FixMethodOrder;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
+
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
+
 
 /**
  * @author Niklas Schlüter, André Käthner
  * @serial Account
  * @version 1.0
  */
-public class AddNewDebtTest extends ActivityInstrumentationTestCase2<DebtActivity> {
 
-    private EditText debt;
-    private EditText debtor;
-    private EditText reason;
-    private Button createNewDebtButton;
-    private DebtActivity nDebtActivity;
+@RunWith(AndroidJUnit4.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+public class AddNewDebtTest {
 
-    public AddNewDebtTest() {
-        super(DebtActivity.class);
+    @Rule
+    public final ActivityTestRule<DebtActivity> testRule = new ActivityTestRule<>(DebtActivity.class);
+
+    @Test
+    public void testRegister() {
+        Activity activity = testRule.getActivity();
+
     }
 
-    //Initialiseriung der Variablen
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        setActivityInitialTouchMode(true);
-        nDebtActivity = getActivity();
-        debt = (EditText) nDebtActivity.findViewById(R.id.edit_debt);
-        debtor = (EditText) nDebtActivity.findViewById(R.id.edit_debtor);
-        reason = (EditText) nDebtActivity.findViewById(R.id.edit_reason);
-        createNewDebtButton = (Button) nDebtActivity.findViewById(R.id.btn_createNewDebt);
-    }
-
-    //Testen ob Eingabe != null ist
-    public void testPreconditions() {
-        assertNotNull(debt);
-        assertNotNull(debtor);
-        assertNotNull(reason);
-    }
-
-    //Testen ob der LoginButton clickable ist
-    public void testClick() {
-        nDebtActivity.runOnUiThread(new Runnable() {
-
-            @Override
-            public void run() {
-                assertTrue(createNewDebtButton.performClick());
-            }
-        });
+    @Test
+    public void testClickButton() {
+        
     }
 }
