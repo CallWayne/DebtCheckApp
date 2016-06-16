@@ -30,14 +30,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Wie viel soll zurückgezahlt werden?"
-                android:id="@+id/payment"
-                android:layout_column="0"
-                android:layout_weight="1"/>
-
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -45,7 +37,8 @@
                 android:ems="10"
                 android:id="@+id/edit_payment"
                 android:layout_column="1"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:hint="Wieviel soll zurückgezahlt werden?"/>
 
         </TableRow>
 
