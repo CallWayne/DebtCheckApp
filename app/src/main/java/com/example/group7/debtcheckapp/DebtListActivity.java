@@ -15,6 +15,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import com.example.group7.debtcheckapp.Exceptions.InvalidGetAllDebtsException;
 import com.example.group7.debtcheckapp.Mock.Debt;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -119,7 +121,12 @@ public class DebtListActivity extends AppCompatActivity {
         protected ArrayList<Debt> doInBackground(Void... params) {
             Log.d(TAG, "doInBackground");
             DebtCheckAndroidApplication app = (DebtCheckAndroidApplication) getApplication();
-            ArrayList<Debt> debtList = app.getOnlineIntegrationServiceInterface().getAllDebts();
+            ArrayList<Debt> debtList = null;
+            try {
+                debtList = app.getOnlineIntegrationServiceInterface().getAllDebts();
+            } catch (InvalidGetAllDebtsException e) {
+                e.printStackTrace();
+            }
             return debtList;
          }
     }

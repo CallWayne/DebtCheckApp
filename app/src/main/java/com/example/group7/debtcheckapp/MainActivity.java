@@ -19,6 +19,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.group7.debtcheckapp.Exceptions.InvalidGetAllClaimsException;
+import com.example.group7.debtcheckapp.Exceptions.InvalidGetAllDebtsException;
 import com.example.group7.debtcheckapp.Mock.Debt;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -156,8 +159,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(intent);
         }
         else if (id == R.id.nav_logout) {
-            LogoutTask logoutTask = new LogoutTask();
-            logoutTask.execute();
+
+                LogoutTask logoutTask = new LogoutTask();
+                logoutTask.execute();
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         }
@@ -194,7 +198,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Log.d(TAG, "doInBackground DebtListTask");
 
             DebtCheckAndroidApplication app = (DebtCheckAndroidApplication) getApplication();
-            ArrayList<Debt> debtList = app.getOnlineIntegrationServiceInterface().getAllDebts();
+            ArrayList<Debt> debtList = null;
+            try {
+                debtList = app.getOnlineIntegrationServiceInterface().getAllDebts();
+            } catch (InvalidGetAllDebtsException e) {
+                e.printStackTrace();
+            }
             return debtList;
         }
     }
@@ -206,7 +215,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Log.d(TAG, "doInBackground ClaimListTask");
 
             DebtCheckAndroidApplication app = (DebtCheckAndroidApplication) getApplication();
-            ArrayList<Debt> claimList = app.getOnlineIntegrationServiceInterface().getAllClaims();
+            ArrayList<Debt> claimList = null;
+            try {
+                claimList = app.getOnlineIntegrationServiceInterface().getAllClaims();
+            } catch (InvalidGetAllClaimsException e) {
+                e.printStackTrace();
+            }
             return claimList;
         }
     }

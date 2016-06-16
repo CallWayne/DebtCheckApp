@@ -24,6 +24,8 @@ import com.example.group7.debtcheckapp.Exceptions.InvalidLoginException;
 import com.example.group7.debtcheckapp.Exceptions.InvalidSignupException;
 import com.example.group7.debtcheckapp.Mock.Account;
 
+import java.util.concurrent.ExecutionException;
+
 /**
  * @author Niklas Schlüter, André Käthner
  * @version 1.0
@@ -106,6 +108,7 @@ public class SignupActivity extends AppCompatActivity {
             //AsyncTask intialisieren und ausführen
             SignupTask signupTask = new SignupTask(btnSignup.getContext());
             signupTask.execute(username, email, password);
+
         }
         else{
 
@@ -121,7 +124,6 @@ public class SignupActivity extends AppCompatActivity {
      */
     public void onSignupFailed() {
         Log.d(TAG, "onSignupFailed");
-
         //Toast initialisieren und anzeigen
         Toast.makeText(getBaseContext(), "Login fehlgeschlagen", Toast.LENGTH_LONG).show();
         _signupButton.setEnabled(true);

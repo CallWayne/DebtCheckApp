@@ -17,6 +17,13 @@ public class InvalidAddNewDebtException extends Exception {
 
     /**
      * Konstruktor
+     */
+    public InvalidAddNewDebtException() {
+        super("AddNewDebt fehlgeschlagen!");
+    }
+
+    /**
+     * Konstruktor
      * @param message String
      * @param throwable Throwable
      */

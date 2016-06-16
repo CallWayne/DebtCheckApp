@@ -1,25 +1,25 @@
 package com.example.group7.debtcheckapp.Exceptions;
 
 /**
- * Exception InvalidLoginException
+ * Exception InvalidGetAllClaimsException
  * @author Niklas Schlüter, André Käthner
  * @version 1.0
  */
-public class InvalidSignupException extends Exception {
+public class InvalidGetAllClaimsException extends Exception {
 
     /**
      * Konstruktor
      * @param message String
      */
-    public InvalidSignupException(String message) {
+    public InvalidGetAllClaimsException(String message) {
         super(message);
     }
 
     /**
      * Konstruktor
      */
-    public InvalidSignupException() {
-        super("Signup fehlgeschlagen!");
+    public InvalidGetAllClaimsException() {
+        super("GetAllClaims fehlgeschlagen!");
     }
 
     /**
@@ -27,7 +27,7 @@ public class InvalidSignupException extends Exception {
      * @param message String
      * @param throwable Throwable
      */
-    public InvalidSignupException(String message, Throwable throwable) {
+    public InvalidGetAllClaimsException(String message, Throwable throwable) {
         super(message, throwable);
     }
 }

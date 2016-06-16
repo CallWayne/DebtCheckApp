@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
+
+import com.example.group7.debtcheckapp.Exceptions.InvalidGetAllClaimsException;
 import com.example.group7.debtcheckapp.Mock.Debt;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -56,7 +58,12 @@ public class ClaimListActivity extends AppCompatActivity {
             Log.d(TAG, "doInBackground");
 
             DebtCheckAndroidApplication app = (DebtCheckAndroidApplication) getApplication();
-            ArrayList<Debt> claimList = app.getOnlineIntegrationServiceInterface().getAllClaims();
+            ArrayList<Debt> claimList = null;
+            try {
+                claimList = app.getOnlineIntegrationServiceInterface().getAllClaims();
+            } catch (InvalidGetAllClaimsException e) {
+                e.printStackTrace();
+            }
             return claimList;
         }
     }

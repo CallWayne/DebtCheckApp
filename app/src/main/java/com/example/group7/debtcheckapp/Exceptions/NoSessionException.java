@@ -17,6 +17,13 @@ public class NoSessionException extends Exception {
 
     /**
      * Konstruktor
+     */
+    public NoSessionException() {
+        super("NoSession fehlgeschlagen!");
+    }
+
+    /**
+     * Konstruktor
      * @param message String
      * @param throwable Throwable
      */

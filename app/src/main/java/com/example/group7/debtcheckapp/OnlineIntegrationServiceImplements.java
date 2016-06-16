@@ -9,6 +9,11 @@ import com.example.group7.Wsdl2Code.OnlineIntegrationService.OnlineIntegrationSe
 import com.example.group7.Wsdl2Code.OnlineIntegrationService.addNewDebtResponsee;
 import com.example.group7.Wsdl2Code.OnlineIntegrationService.debtListResponse;
 import com.example.group7.Wsdl2Code.OnlineIntegrationService.userLoginResponse;
+import com.example.group7.debtcheckapp.Exceptions.InvalidGetAllClaimsException;
+import com.example.group7.debtcheckapp.Exceptions.InvalidGetAllDebtsException;
+import com.example.group7.debtcheckapp.Exceptions.InvalidLogoutException;
+import com.example.group7.debtcheckapp.Exceptions.InvalidPayDebtException;
+import com.example.group7.debtcheckapp.Exceptions.InvalidSignupException;
 import com.example.group7.debtcheckapp.Mock.Account;
 import com.example.group7.debtcheckapp.Mock.Debt;
 import com.example.group7.debtcheckapp.Exceptions.InvalidLoginException;
@@ -50,9 +55,10 @@ public class OnlineIntegrationServiceImplements implements OnlineIntegrationServ
 
     /**
      * Methode für das Logout
+     * @throws InvalidLogoutException
      */
     @Override
-    public void logout()  {
+    public void logout() throws InvalidLogoutException {
         webService.logout(this.sessionId);
     }
 
@@ -62,9 +68,10 @@ public class OnlineIntegrationServiceImplements implements OnlineIntegrationServ
      * @param email String
      * @param password String
      * @return Account
+     * @throws InvalidSignupException
      */
     @Override
-    public Account signup(String username, String email, String password) {
+    public Account signup(String username, String email, String password) throws InvalidSignupException {
         userLoginResponse response = this.webService.registerNewAccount(username, email, password);
         this.sessionId = response.sessionId;
         return new Account(response.account.userName, response.account.email ,response.account.password);
@@ -89,9 +96,10 @@ public class OnlineIntegrationServiceImplements implements OnlineIntegrationServ
     /**
      * GET-Methode für alle Schulden
      * @return ArrayList
+     * @throws InvalidGetAllDebtsException
      */
     @Override
-    public ArrayList<Debt> getAllDebts(){
+    public ArrayList<Debt> getAllDebts() throws InvalidGetAllDebtsException {
         debtListResponse response = this.webService.getMyDebts(this.sessionId);
         if(response.debtList == null){
             return null;
@@ -108,9 +116,10 @@ public class OnlineIntegrationServiceImplements implements OnlineIntegrationServ
     /**
      * GET-Methode für alle Forderungen
      * @return ArrayList
+     * @throws InvalidGetAllClaimsException
      */
     @Override
-    public ArrayList<Debt> getAllClaims(){
+    public ArrayList<Debt> getAllClaims() throws InvalidGetAllClaimsException {
         debtListResponse response = this.webService.getMyClaims(this.sessionId);
         if(response.debtList == null){
             return null;
@@ -128,9 +137,10 @@ public class OnlineIntegrationServiceImplements implements OnlineIntegrationServ
      * @param creditor String
      * @param amount BigDecimal
      * @param id int
+     * @throws InvalidPayDebtException
      */
     @Override
-    public void payDebt(String creditor, BigDecimal amount, int id){
+    public void payDebt(String creditor, BigDecimal amount, int id) throws InvalidPayDebtException {
         this.webService.payDebt(this.sessionId, creditor, amount.doubleValue(), id);
     }
 }

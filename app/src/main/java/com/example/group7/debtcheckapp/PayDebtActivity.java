@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.group7.debtcheckapp.Exceptions.InvalidPayDebtException;
 import com.example.group7.debtcheckapp.Mock.Debt;
 import java.math.BigDecimal;
 import butterknife.ButterKnife;
@@ -117,7 +119,12 @@ public class PayDebtActivity extends AppCompatActivity {
                 DebtCheckAndroidApplication app = (DebtCheckAndroidApplication) getApplication();
                 BigDecimal amountBd = new BigDecimal(amount);
                 //Methode payDebt auf dem WebService aufrufen
-                app.getOnlineIntegrationServiceInterface().payDebt(debt.getCreditor(), amountBd, debt.getId());
+                try{
+                    app.getOnlineIntegrationServiceInterface().payDebt(debt.getCreditor(), amountBd, debt.getId());
+                }catch(InvalidPayDebtException e){
+                    e.printStackTrace();
+                }
+
                 //Toast initialisieren und anzeigen
                 CharSequence text = "Erfolgreich zurückgezahlt";
                 Toast.makeText(getBaseContext(), text, Toast.LENGTH_SHORT).show();

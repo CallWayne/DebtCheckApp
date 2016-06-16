@@ -17,6 +17,13 @@ public class InvalidLoginException extends Exception {
 
     /**
      * Konstruktor
+     */
+    public InvalidLoginException() {
+        super("Login fehlgeschlagen!");
+    }
+
+    /**
+     * Konstruktor
      * @param message String
      * @param throwable Throwable
      */
