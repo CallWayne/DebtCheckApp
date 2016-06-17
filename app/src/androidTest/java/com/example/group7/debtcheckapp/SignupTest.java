@@ -1,19 +1,25 @@
 package com.example.group7.debtcheckapp;
 
 import android.app.Activity;
-import android.app.Instrumentation;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.test.espresso.Espresso;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 
+import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
-import static android.support.test.espresso.action.ViewActions.*;
-import static android.support.test.espresso.matcher.ViewMatchers.*;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static android.support.test.espresso.action.ViewActions.typeText;
+import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+
 
 /**
  * @author Niklas Schlüter, André Käthner
@@ -21,41 +27,57 @@ import static android.support.test.espresso.matcher.ViewMatchers.*;
  * @version 1.0
  */
 @RunWith(AndroidJUnit4.class)
-public class SignupTest extends ActivityInstrumentationTestCase2<SignupActivity> {
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+public class SignupTest {
 
-    //@Rule
-    //public ActivityTestRule<SignupActivity> rule = new ActivityTestRule<>(SignupActivity.class);
-
-    private Activity activity;
-    private Instrumentation instrumentation;
-
-    public SignupTest() {
-        super(SignupActivity.class);
-    }
-
-    protected void setUp() throws Exception {
-        super.setUp();
-
-        this.activity = super.getActivity();
-        this.instrumentation = super.getInstrumentation();
-    }
+    @Rule
+    public ActivityTestRule<LoginActivity> activityTestRule = new ActivityTestRule<>(LoginActivity.class);
 
     /**
-     * Prüft, ob der Signupprozess funktioniert.
+     * Ein User wird angelegt
+     * @throws Exception
      */
     @Test
-    public void signupBtnClick()throws Exception {
+    public void signupBtnClick1()throws Exception {
         try {
-        Log.d("Test","signupBtnClick");
-        Espresso.onView(withId(R.id.input_name)).perform(click());
-        Espresso.onView(withId(R.id.input_name)).perform(typeText("Test"));
-        Espresso.onView(withId(R.id.input_email)).perform(click());
-        Espresso.onView(withId(R.id.input_email)).perform(typeText("test@outlook.de"));
-        Espresso.onView(withId(R.id.input_password)).perform(click());
-        Espresso.onView(withId(R.id.input_password)).perform(typeText("123456"), closeSoftKeyboard());
-        Espresso.onView(withId(R.id.btn_signup)).perform(click());
+        Log.d("Test","signupBtnClick1");
+            Espresso.onView(withId(R.id.link_signup)).perform(click());
+            Espresso.onView(withId(R.id.link_signup)).check(doesNotExist());
+
+            Espresso.onView(withId(R.id.input_name)).perform(click());
+            Espresso.onView(withId(R.id.input_name)).perform(typeText("Test2"));
+            Espresso.onView(withId(R.id.input_email)).perform(click());
+            Espresso.onView(withId(R.id.input_email)).perform(typeText("test2@outlook.de"));
+            Espresso.onView(withId(R.id.input_password)).perform(click());
+            Espresso.onView(withId(R.id.input_password)).perform(typeText("123456"), closeSoftKeyboard());
+            Espresso.onView(withId(R.id.btn_signup)).perform(click());
+            Espresso.onView(withId(R.id.btn_signup)).check(doesNotExist());
         } catch (Exception e) {
             Log.d("androidTest", e.getMessage());
         }
     }
+
+    /**
+     * Signup wird zweimal aufgerufen um zwei User anzulegen
+     * @throws Exception
+     */
+    /*@Test
+    public void signupBtnClick2()throws Exception {
+        try {
+            Log.d("Test","signupBtnClick2");
+            Espresso.onView(withId(R.id.link_signup)).perform(click());
+            Espresso.onView(withId(R.id.link_signup)).check(doesNotExist());
+
+            Espresso.onView(withId(R.id.input_name)).perform(click());
+            Espresso.onView(withId(R.id.input_name)).perform(typeText("Test5"));
+            Espresso.onView(withId(R.id.input_email)).perform(click());
+            Espresso.onView(withId(R.id.input_email)).perform(typeText("test5@outlook.de"));
+            Espresso.onView(withId(R.id.input_password)).perform(click());
+            Espresso.onView(withId(R.id.input_password)).perform(typeText("123456"), closeSoftKeyboard());
+            Espresso.onView(withId(R.id.btn_signup)).perform(click());
+            Espresso.onView(withId(R.id.btn_signup)).check(doesNotExist());
+        } catch (Exception e) {
+            Log.d("androidTest", e.getMessage());
+        }
+    }*/
 }
