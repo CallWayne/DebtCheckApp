@@ -3,7 +3,6 @@ package com.example.group7.debtcheckapp;
 import android.support.test.espresso.Espresso;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.util.Log;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -28,28 +27,48 @@ public class AddNewDebtTest {
 
     @Test
     public void addNewDebtBtnClick() throws Exception {
-        try {
-            Log.d("Test","createNewDebtBtnClick");
+
+            //Klick auf das Edit Textfeld input_email
             Espresso.onView(withId(R.id.input_email)).perform(click());
+            //Email wird ins Textfeld geschrieben
             Espresso.onView(withId(R.id.input_email)).perform(typeText("test1@outlook.de"));
+            //Klick auf das Edit Textfeld input_password
             Espresso.onView(withId(R.id.input_password)).perform(click());
+            //Passwort wird ins Textfeld geschrieben
             Espresso.onView(withId(R.id.input_password)).perform(typeText("123456"), closeSoftKeyboard());
+            //Klick auf den btn_login Button
             Espresso.onView(withId(R.id.btn_login)).perform(click());
+            //Prüft ob der btn_login Button noch existiert
+            //Button sollte nicht mehr gefunden werden
             Espresso.onView(withId(R.id.btn_login)).check(doesNotExist());
 
-            Espresso.onView(withId(R.id.newDebt)).perform(click());
-            Espresso.onView(withId(R.id.newDebt)).check(doesNotExist());
 
+
+            //Klick auf den btn_newDebt Button
+            Espresso.onView(withId(R.id.btn_newDebt)).perform(click());
+            //Prüft ob der btn_newDebt Button noch existiert
+            //Button sollte nicht mehr gefunden werden
+            Espresso.onView(withId(R.id.btn_newDebt)).check(doesNotExist());
+
+
+
+            //Klick auf das Edit Textfeld edit_debt
             Espresso.onView(withId(R.id.edit_debt)).perform(click());
+            //Höhe der Schuld wird ins Textfeld geschrieben
             Espresso.onView(withId(R.id.edit_debt)).perform(typeText("80"));
+            //Klick auf das Edit Textfeld edit_debtor
             Espresso.onView(withId(R.id.edit_debtor)).perform(click());
-            Espresso.onView(withId(R.id.edit_debtor)).perform(typeText("Test2"), closeSoftKeyboard());
+            //Schuldner wird ins Textfeld geschrieben
+            //Name des Schuldners muss bekannt sein
+            Espresso.onView(withId(R.id.edit_debtor)).perform(typeText("Test2"));
+            //Klick auf das Edit Textfeld edit_reason
             Espresso.onView(withId(R.id.edit_reason)).perform(click());
-            Espresso.onView(withId(R.id.edit_reason)).perform(typeText("Testschuld"));
+            //Grund der Schuld wird ins Textfeld geschrieben
+            Espresso.onView(withId(R.id.edit_reason)).perform(typeText("Testschuld"), closeSoftKeyboard());
+            //Klick auf den btn_createNewDebt Button
             Espresso.onView(withId(R.id.btn_createNewDebt)).perform(click());
+            //Prüft ob der btn_createNewDebt Button noch existiert
+            //Button sollte nicht mehr gefunden werden
             Espresso.onView(withId(R.id.btn_createNewDebt)).check(doesNotExist());
-        } catch (Exception e) {
-            Log.d("androidTest", e.getMessage());
-        }
     }
 }
