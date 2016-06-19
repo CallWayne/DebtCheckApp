@@ -140,7 +140,7 @@ public class DebtActivity extends AppCompatActivity {
                 DebtCheckAndroidApplication app = (DebtCheckAndroidApplication) getApplication();
                 app.setDebt(result);
                 //Toast erstellen und anzeigen
-                CharSequence text = "Erstellen einer neuen Schuld erfolgreich! Die Höhe der Schuld beträgt ";
+                CharSequence text = "Erstellen einer neuen Schuld erfolgreich!";
                 Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
                 _createdNewDebtButton.setEnabled(true);
                 //nächste Activity anzeigen
