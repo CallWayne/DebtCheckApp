@@ -28,7 +28,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
  */
 @RunWith(AndroidJUnit4.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class SignupTest {
+public class ASignupTest {
 
     @Rule
     public ActivityTestRule<LoginActivity> activityTestRule = new ActivityTestRule<>(LoginActivity.class);
@@ -61,7 +61,7 @@ public class SignupTest {
      * Signup wird zweimal aufgerufen um zwei User anzulegen
      * @throws Exception
      */
-    /*@Test
+
     public void signupBtnClick2()throws Exception {
         try {
             Log.d("Test","signupBtnClick2");
@@ -69,9 +69,9 @@ public class SignupTest {
             Espresso.onView(withId(R.id.link_signup)).check(doesNotExist());
 
             Espresso.onView(withId(R.id.input_name)).perform(click());
-            Espresso.onView(withId(R.id.input_name)).perform(typeText("Test5"));
+            Espresso.onView(withId(R.id.input_name)).perform(typeText("Test1"));
             Espresso.onView(withId(R.id.input_email)).perform(click());
-            Espresso.onView(withId(R.id.input_email)).perform(typeText("test5@outlook.de"));
+            Espresso.onView(withId(R.id.input_email)).perform(typeText("test1@outlook.de"));
             Espresso.onView(withId(R.id.input_password)).perform(click());
             Espresso.onView(withId(R.id.input_password)).perform(typeText("123456"), closeSoftKeyboard());
             Espresso.onView(withId(R.id.btn_signup)).perform(click());
@@ -79,5 +79,5 @@ public class SignupTest {
         } catch (Exception e) {
             Log.d("androidTest", e.getMessage());
         }
-    }*/
+    }
 }
