@@ -21,12 +21,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
  * @version 1.0
  */
 @RunWith(AndroidJUnit4.class)
-<<<<<<< HEAD:app/src/androidTest/java/com/example/group7/debtcheckapp/ASignupTest.java
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ASignupTest {
-=======
-public class SignupTest {
->>>>>>> origin/master:app/src/androidTest/java/com/example/group7/debtcheckapp/SignupTest.java
 
     @Rule
     public ActivityTestRule<LoginActivity> activityTestRule = new ActivityTestRule<>(LoginActivity.class);
@@ -62,31 +57,4 @@ public class SignupTest {
         //Button sollte nicht mehr gefunden werden
         Espresso.onView(withId(R.id.btn_signup)).check(doesNotExist());
     }
-<<<<<<< HEAD:app/src/androidTest/java/com/example/group7/debtcheckapp/ASignupTest.java
-
-    /**
-     * Signup wird zweimal aufgerufen um zwei User anzulegen
-     * @throws Exception
-     */
-
-    public void signupBtnClick2()throws Exception {
-        try {
-            Log.d("Test","signupBtnClick2");
-            Espresso.onView(withId(R.id.link_signup)).perform(click());
-            Espresso.onView(withId(R.id.link_signup)).check(doesNotExist());
-
-            Espresso.onView(withId(R.id.input_name)).perform(click());
-            Espresso.onView(withId(R.id.input_name)).perform(typeText("Test1"));
-            Espresso.onView(withId(R.id.input_email)).perform(click());
-            Espresso.onView(withId(R.id.input_email)).perform(typeText("test1@outlook.de"));
-            Espresso.onView(withId(R.id.input_password)).perform(click());
-            Espresso.onView(withId(R.id.input_password)).perform(typeText("123456"), closeSoftKeyboard());
-            Espresso.onView(withId(R.id.btn_signup)).perform(click());
-            Espresso.onView(withId(R.id.btn_signup)).check(doesNotExist());
-        } catch (Exception e) {
-            Log.d("androidTest", e.getMessage());
-        }
-    }
-=======
->>>>>>> origin/master:app/src/androidTest/java/com/example/group7/debtcheckapp/SignupTest.java
 }
