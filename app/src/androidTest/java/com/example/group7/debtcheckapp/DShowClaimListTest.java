@@ -22,7 +22,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
  * @version 1.0
  */
 @RunWith(AndroidJUnit4.class)
-public class ShowClaimListTest {
+public class DShowClaimListTest {
 
         @Rule
         public ActivityTestRule<LoginActivity> activityActivityTestRule = new ActivityTestRule<>(LoginActivity.class);

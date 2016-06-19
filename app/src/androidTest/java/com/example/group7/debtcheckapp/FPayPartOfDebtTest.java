@@ -24,7 +24,7 @@ import static org.hamcrest.CoreMatchers.anything;
  * @version 1.0
  */
 @RunWith(AndroidJUnit4.class)
-public class PayPartOfDebtTest {
+public class FPayPartOfDebtTest {
 
     @Rule
     public ActivityTestRule<LoginActivity> activityActivityTestRule = new ActivityTestRule<>(LoginActivity.class);
@@ -64,7 +64,7 @@ public class PayPartOfDebtTest {
             //Klick auf das Edit Textfeld edit_payment
             Espresso.onView(withId(R.id.edit_payment)).perform(click());
             //Wert der zurückgezahlt werden soll wird ins Textfeld geschrieben
-            Espresso.onView(withId(R.id.edit_payment)).perform(typeText("20.00"));
+            Espresso.onView(withId(R.id.edit_payment)).perform(typeText("20.00"), closeSoftKeyboard());
             //Klick auf den btn_payDebt Button
             //Wert des edit_payment wird von der Schuld subtrahiert
             //Öffnet die MainActivity

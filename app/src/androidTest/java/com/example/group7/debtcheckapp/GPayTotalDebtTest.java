@@ -1,6 +1,7 @@
 package com.example.group7.debtcheckapp;
 
 import android.support.test.espresso.Espresso;
+import android.support.test.espresso.ViewInteraction;
 import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -11,10 +12,12 @@ import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static android.support.test.espresso.action.ViewActions.longClick;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.CoreMatchers.anything;
 
 /**
  * @author Niklas Schlüter, André Käthner
@@ -22,7 +25,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
  * @version 1.0
  */
 @RunWith(AndroidJUnit4.class)
-public class ShowDebtListTest {
+public class GPayTotalDebtTest {
 
     @Rule
     public ActivityTestRule<LoginActivity> activityActivityTestRule = new ActivityTestRule<>(LoginActivity.class);
@@ -51,6 +54,22 @@ public class ShowDebtListTest {
             //Klick auf Debt List in Navigations Menü der Slide Bar
             //Öffnet die DebtListActivity
             Espresso.onView(withText("Debt List")).perform(click());
+            //Klickt auf das erste Element (Debt) in der listview auf der DebtListActivity per longClick
+            Espresso.onData(anything()).inAdapterView(withId(R.id.listview_DebtList)).atPosition(0).perform(longClick());
+            //Klickt auf das View Element mit dem Text "PayDebt"
+            //Öffnet die PayDebtActivity
+            Espresso.onView(withText("Pay Debt")).perform(click());
 
+
+
+            //Klick auf das Edit Textfeld edit_payment
+            Espresso.onView(withId(R.id.edit_payment)).perform(click());
+            //Wert der zurückgezahlt werden soll wird ins Textfeld geschrieben
+            Espresso.onView(withId(R.id.edit_payment)).perform(typeText("50.00"), closeSoftKeyboard());
+            //Klick auf den btn_payDebt Button
+            //Wert des edit_payment wird von der Schuld subtrahiert
+            //Öffnet die MainActivity
+            Espresso.onView(withId(R.id.btn_payDebt)).perform(click());
     }
+
 }

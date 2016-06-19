@@ -1,18 +1,12 @@
 package com.example.group7.debtcheckapp;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.support.test.espresso.Espresso;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.util.Log;
 
-import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
 
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
@@ -27,7 +21,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
  * @version 1.0
  */
 @RunWith(AndroidJUnit4.class)
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ASignupTest2 {
 
     @Rule
@@ -38,22 +31,32 @@ public class ASignupTest2 {
      * @throws Exception
      */
     @Test
-    public void signupBtnClick1()throws Exception {
-        try {
-            Log.d("Test","signupBtnClick1");
-            Espresso.onView(withId(R.id.link_signup)).perform(click());
-            Espresso.onView(withId(R.id.link_signup)).check(doesNotExist());
+    public void signupBtnClick2() throws Exception {
 
-            Espresso.onView(withId(R.id.input_name)).perform(click());
-            Espresso.onView(withId(R.id.input_name)).perform(typeText("Test1"));
-            Espresso.onView(withId(R.id.input_email)).perform(click());
-            Espresso.onView(withId(R.id.input_email)).perform(typeText("test1@outlook.de"));
-            Espresso.onView(withId(R.id.input_password)).perform(click());
-            Espresso.onView(withId(R.id.input_password)).perform(typeText("123456"), closeSoftKeyboard());
-            Espresso.onView(withId(R.id.btn_signup)).perform(click());
-            Espresso.onView(withId(R.id.btn_signup)).check(doesNotExist());
-        } catch (Exception e) {
-            Log.d("androidTest", e.getMessage());
-        }
+        Espresso.onView(withId(R.id.input_email)).perform(click(), closeSoftKeyboard());
+        //Klick auf das Textview Element link_signup
+        Espresso.onView(withId(R.id.link_signup)).perform(click());
+        //Prüft ob das Element link_signup noch existiert
+        //Textview Element sollte nicht mehr gefunden werden
+        Espresso.onView(withId(R.id.link_signup)).check(doesNotExist());
+
+        //Klick auf das Edit Textfeld input_name
+        Espresso.onView(withId(R.id.input_name)).perform(click());
+        //Username wird ins Textfeld geschrieben
+        Espresso.onView(withId(R.id.input_name)).perform(typeText("Test2"));
+        //Klick auf das Edit Textfeld input_email
+        Espresso.onView(withId(R.id.input_email)).perform(click());
+        //Email wird ins Textfeld geschrieben
+        Espresso.onView(withId(R.id.input_email)).perform(typeText("test2@outlook.de"));
+        //Klick auf das Edit Textfeld input_password
+        Espresso.onView(withId(R.id.input_password)).perform(click());
+        //Passwort wird ins Textfeld geschrieben
+        Espresso.onView(withId(R.id.input_password)).perform(typeText("123456"), closeSoftKeyboard());
+        //Klick auf den btn_signup Button
+        //Öffnet LoginActivity
+        Espresso.onView(withId(R.id.btn_signup)).perform(click());
+        //Prüft ob der btn_signup Button noch existiert
+        //Button sollte nicht mehr gefunden werden
+        Espresso.onView(withId(R.id.btn_signup)).check(doesNotExist());
     }
 }

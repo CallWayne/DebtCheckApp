@@ -7,6 +7,9 @@ import android.support.test.runner.AndroidJUnit4;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
+
 
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
@@ -22,11 +25,11 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 @RunWith(AndroidJUnit4.class)
 public class CAddNewDebtTest {
 
-    @Rule
-    public ActivityTestRule<LoginActivity> activityActivityTestRule = new ActivityTestRule<>(LoginActivity.class);
+        @Rule
+        public ActivityTestRule<LoginActivity> activityActivityTestRule = new ActivityTestRule<>(LoginActivity.class);
 
-    @Test
-    public void addNewDebtBtnClick() throws Exception {
+        @Test
+        public void addNewDebtBtnClick() throws Exception {
 
             //Klick auf das Edit Textfeld input_email
             Espresso.onView(withId(R.id.input_email)).perform(click());
@@ -43,7 +46,6 @@ public class CAddNewDebtTest {
             Espresso.onView(withId(R.id.btn_login)).check(doesNotExist());
 
 
-
             //Klick auf den btn_newDebt Button
             Espresso.onView(withId(R.id.btn_newDebt)).perform(click());
             //Prüft ob der btn_newDebt Button noch existiert
@@ -51,11 +53,10 @@ public class CAddNewDebtTest {
             Espresso.onView(withId(R.id.btn_newDebt)).check(doesNotExist());
 
 
-
             //Klick auf das Edit Textfeld edit_debt
             Espresso.onView(withId(R.id.edit_debt)).perform(click());
             //Höhe der Schuld wird ins Textfeld geschrieben
-            Espresso.onView(withId(R.id.edit_debt)).perform(typeText("80"));
+            Espresso.onView(withId(R.id.edit_debt)).perform(typeText("70"));
             //Klick auf das Edit Textfeld edit_debtor
             Espresso.onView(withId(R.id.edit_debtor)).perform(click());
             //Schuldner wird ins Textfeld geschrieben
@@ -70,5 +71,6 @@ public class CAddNewDebtTest {
             //Prüft ob der btn_createNewDebt Button noch existiert
             //Button sollte nicht mehr gefunden werden
             Espresso.onView(withId(R.id.btn_createNewDebt)).check(doesNotExist());
+
     }
 }

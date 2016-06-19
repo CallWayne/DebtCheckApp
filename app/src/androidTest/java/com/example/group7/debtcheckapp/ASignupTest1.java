@@ -21,7 +21,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
  * @version 1.0
  */
 @RunWith(AndroidJUnit4.class)
-public class ASignupTest {
+public class ASignupTest1 {
 
     @Rule
     public ActivityTestRule<LoginActivity> activityTestRule = new ActivityTestRule<>(LoginActivity.class);
