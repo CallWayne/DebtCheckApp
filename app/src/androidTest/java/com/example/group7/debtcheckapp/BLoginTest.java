@@ -4,8 +4,6 @@ import android.support.test.espresso.Espresso;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
-import android.util.Log;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,16 +27,19 @@ public class BLoginTest {
 
     @Test
     public void loginBtnClick() throws Exception {
-        try {
-        Log.d("Test1","loginBtnClick");
-        Espresso.onView(withId(R.id.input_email)).perform(click());
-        Espresso.onView(withId(R.id.input_email)).perform(typeText("test1@outlook.de"));
-        Espresso.onView(withId(R.id.input_password)).perform(click());
-        Espresso.onView(withId(R.id.input_password)).perform(typeText("123456"), closeSoftKeyboard());
-        Espresso.onView(withId(R.id.btn_login)).perform(click());
-        Espresso.onView(withId(R.id.btn_login)).check(doesNotExist());
-        } catch (Exception e) {
-            Log.d("androidTest", e.getMessage());
-        }
+
+            //Klick auf das Edit Textfeld input_email
+            Espresso.onView(withId(R.id.input_email)).perform(click());
+            //Email wird ins Textfeld geschrieben
+            Espresso.onView(withId(R.id.input_email)).perform(typeText("test1@outlook.de"));
+            //Klick auf das Edit Textfeld input_password
+            Espresso.onView(withId(R.id.input_password)).perform(click());
+            //Passwort wird ins Textfeld geschrieben
+            Espresso.onView(withId(R.id.input_password)).perform(typeText("123456"), closeSoftKeyboard());
+            //Klick auf den btn_login Button
+            Espresso.onView(withId(R.id.btn_login)).perform(click());
+            //Prüft ob der btn_login Button noch existiert
+            //Button sollte nicht mehr gefunden werden
+            Espresso.onView(withId(R.id.btn_login)).check(doesNotExist());
     }
 }
