@@ -29,7 +29,7 @@ import org.ksoap2.serialization.MarshalFloat;
 public class OnlineIntegrationService {
     
     public String NAMESPACE ="http://Online.debtcheck.de/";
-    public String url="http://10.0.2.2:8080/debtcheck/OnlineIntegration";
+    public String url="http://10.60.64.37:8080/debtcheck/OnlineIntegration";
     public int timeOut = 10000;
     public IWsdl2CodeEvents eventHandler;
     public SoapProtocolVersion soapVersion;
